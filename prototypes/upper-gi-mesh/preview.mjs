@@ -23,4 +23,5 @@ const server=http.createServer((req,res)=>{
   res.writeHead(status,{...headers,'Content-Length':end-start+1});fs.createReadStream(file,{start,end}).pipe(res);
  }catch{res.writeHead(404);res.end('Not found');}
 });
-server.listen(5194,'127.0.0.1',()=>console.log('Simulator: http://127.0.0.1:5194/prototypes/upper-gi-mesh/index.html'));
+const port=Number(process.env.PORT)||5194;
+server.listen(port,'0.0.0.0',()=>console.log(`Simulator listening on 0.0.0.0:${port}`));
