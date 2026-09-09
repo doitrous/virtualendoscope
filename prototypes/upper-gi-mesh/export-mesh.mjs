@@ -4,7 +4,7 @@ import { buildGeometry } from './anatomy.mjs';
 const g=buildGeometry();g.computeBoundingBox();
 const p=g.attributes.position,n=g.attributes.normal;
 const binary=Buffer.concat([Buffer.from(p.array.buffer),Buffer.from(n.array.buffer)]);
-const doc={asset:{version:'2.0',generator:'Lumen illustrative stomach mesh checkpoint'},scene:0,scenes:[{nodes:[0]}],nodes:[{mesh:0,name:'Stomach cavity — review pending',scale:[.01,.01,.01]}],
+const doc={asset:{version:'2.0',generator:'Virtual Endoscope illustrative stomach mesh checkpoint'},scene:0,scenes:[{nodes:[0]}],nodes:[{mesh:0,name:'Stomach cavity — review pending',scale:[.01,.01,.01]}],
   meshes:[{primitives:[{attributes:{POSITION:0,NORMAL:1},material:0}]}],
   materials:[{name:'Untextured study surface',doubleSided:true,pbrMetallicRoughness:{baseColorFactor:[.65,.4,.36,1],metallicFactor:0,roughnessFactor:.7}}],
   buffers:[{byteLength:binary.length}],bufferViews:[{buffer:0,byteOffset:0,byteLength:p.array.byteLength,target:34962},{buffer:0,byteOffset:p.array.byteLength,byteLength:n.array.byteLength,target:34962}],

@@ -1,7 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
-const source='C:/Users/Omar_/OneDrive/Desktop/Gastroenterology sim';
+const sourceArg=process.argv[2];
+if(!sourceArg)throw Error('Usage: node prepare-diseases.mjs <directory-containing-disease-folders>');
+const source=path.resolve(sourceArg);
+if(!fs.existsSync(source)||!fs.statSync(source).isDirectory())throw Error(`Source directory not found: ${source}`);
 const destination=new URL('./references/diseases/',import.meta.url);fs.mkdirSync(destination,{recursive:true});
 const folders=fs.readdirSync(source,{withFileTypes:true}).filter(d=>d.isDirectory()).sort((a,b)=>a.name.localeCompare(b.name));
 const manifest=[];

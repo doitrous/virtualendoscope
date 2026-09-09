@@ -1,6 +1,4 @@
-/* Nishany “The Clinical Chart”: mirrored from src/index.css and Button.tsx.
-   Scoped to the simulator UI; optical rendering and tissue colours are untouched. */
-@font-face{font-family:'Baloo 2 Variable';font-style:normal;font-weight:400 800;font-display:swap;src:url('./assets/brand/baloo-2-latin-wght-normal.woff2') format('woff2')}
+/* Public warm/coffee UI theme. Optical rendering and tissue colours are untouched. */
 :root{
  --color-paper:#f7f2ea;--color-surface:#fffdf9;--color-surface-2:#f1ebe1;--color-inset:#e9e1d4;
  --color-ink:#1f1b16;--color-ink-2:#675e51;--color-ink-3:#69604f;

@@ -6,7 +6,7 @@ Steering now uses a fixed command frame. Previously, recalculating a held bend a
 
 The Watch peristalsis button selects the antrum and starts near the contraction onset; it does not pretend that a physiological cycle lasts only a few seconds. The repeated waveform remains an interpreted approximation. Rounded lower-amplitude rugae, fading near the polar axis, replace sharp pinched spokes. A finer mesh, reduced baked-photo contrast and broader specular highlights reduce faceting and repeated dark creases. These are rendering improvements, not a claim of photographic equivalence.
 
-The interface now mirrors the existing project's AnatomyAtlas light styling and shared Nishany tokens: white surfaces, cool-grey borders, Figtree text and rose `#d13a63`. The optical field remains black-framed.
+The interface uses a warm coffee palette with cream surfaces, restrained borders, Figtree text and rose `#d13a63` actions. The optical field remains black-framed.
 
 ## What is simulated
 

@@ -1,6 +1,6 @@
 # Disease library — research and implementation record
 
-Reviewed 9 September 2026, before disease implementation. The 23 supplied folders map to 21 selector entries, including normal anatomy and the normal major papilla. Duplicate diverticulum and hernia views are grouped; coeliac bulb and distal-duodenal findings share a continuous case. Original folder names, every image path and SHA-256 checksums are in `references/diseases/manifest.json`. Images remain local. Supplied labels are not independent confirmation of histology or cause; redistribution rights have not been established.
+Reviewed 9 September 2026, before disease implementation. The 23 supplied folders map to 20 selector entries: normal anatomy plus 19 disease views. The major papilla is intentionally excluded from the selector. Duplicate diverticulum and hernia views are grouped; coeliac bulb and distal-duodenal findings share a continuous case. Original folder names, every image path and SHA-256 checksum are in `references/diseases/manifest.json`. Supplied labels are not independent confirmation of histology or cause; redistribution rights have not been established.
 
 ## Evidence used for each case
 
@@ -22,7 +22,6 @@ Reviewed 9 September 2026, before disease implementation. The 23 supplied folder
 | Duodenal hyperplastic polyps | Small elevations; rare histological diagnosis rather than an optical certainty. | [Duodenal hyperplastic polyp report](https://pmc.ncbi.nlm.nih.gov/articles/PMC1860533/) |
 | Gastric metaplasia in duodenal bulb | Nodular example; often endoscopically normal. Not synonymous with gastric intestinal metaplasia. | [Primary image report](https://onlinelibrary.wiley.com/doi/full/10.1046/j.1440-1746.2001.02448.x) |
 | Duodenal adenoma in FAP | Lobulated adenomatous elevations; no automatic gastric hyperplastic polyps. | [ASGE FAP guideline](https://www.asge.org/home/resources/publications/guidelines/familial-adenomatous) |
-| Normal major papilla | Medial duodenal mound. Kept as a normal anatomy case. | [Prospective papilla morphology study](https://pmc.ncbi.nlm.nih.gov/articles/PMC7356786/) |
 
 ## Downloaded material
 

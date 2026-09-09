@@ -2,10 +2,14 @@
   "name": "virtualendoscope",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
+  "homepage": "https://virtualendoscope.doitrous.com/",
+  "repository": "github:doitrous/virtualendoscope",
+  "bugs": "https://github.com/doitrous/virtualendoscope/issues",
   "type": "module",
   "scripts": {
     "start": "node prototypes/upper-gi-mesh/preview.mjs",
-    "test": "node --test prototypes/upper-gi-mesh/guided-track.test.mjs prototypes/upper-gi-mesh/mesh-assets.test.mjs prototypes/upper-gi-mesh/tissue.test.mjs prototypes/upper-gi-mesh/walkthrough.test.mjs"
+    "test": "node --test prototypes/upper-gi-mesh/anatomy.test.mjs prototypes/upper-gi-mesh/disease.test.mjs prototypes/upper-gi-mesh/guided-track.test.mjs prototypes/upper-gi-mesh/mesh-assets.test.mjs prototypes/upper-gi-mesh/scope-physics.test.mjs prototypes/upper-gi-mesh/tissue.test.mjs prototypes/upper-gi-mesh/walkthrough.test.mjs"
   },
   "engines": { "node": ">=20" },
   "dependencies": {
