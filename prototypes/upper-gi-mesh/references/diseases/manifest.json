@@ -1,0 +1,344 @@
+[
+  {
+    "id": "01",
+    "folder": "An advanced oesophageal squamocellular cancer",
+    "images": [
+      {
+        "file": "./references/diseases/01/vid3271.jpg",
+        "sha256": "849ea34c46801db9d3f09d76ec2e4cb416b185f91aace270f2e1a652b49a61a9"
+      },
+      {
+        "file": "./references/diseases/01/vid3272.jpg",
+        "sha256": "9553455ff8ce0629785673fbb0de3801419bf3043edc9f08a0a6ea292a7e1fbc"
+      },
+      {
+        "file": "./references/diseases/01/vid3273.jpg",
+        "sha256": "88235e75cb33ed984d1a3e447ada6e49b0263b409f8cc7f7e90689018db393b8"
+      }
+    ]
+  },
+  {
+    "id": "02",
+    "folder": "Collage Benign submucosal tumour in the descending duodenum",
+    "images": [
+      {
+        "file": "./references/diseases/02/img174.jpg",
+        "sha256": "6abea937bce566157f67ad98ac1707b9c0cb09e06d3264bc4479f035f9937771"
+      }
+    ]
+  },
+  {
+    "id": "03",
+    "folder": "Collage Duodenal mucosa in Coeliac disease",
+    "images": [
+      {
+        "file": "./references/diseases/03/collage2.jpg",
+        "sha256": "2a98e732cc0607dde9100f55741bfa76816b2b67bb2ed03b5df58d935ae6f44b"
+      },
+      {
+        "file": "./references/diseases/03/collage3.jpg",
+        "sha256": "608fbc1a55de621bfc6722fb72619a32aa05ff1b02f2783b10768f3f84519ad9"
+      },
+      {
+        "file": "./references/diseases/03/collage49.jpg",
+        "sha256": "032e59cb0761cec53e90c5eb9b65d102739e46e4c133f02ca3121456ce582fc3"
+      }
+    ]
+  },
+  {
+    "id": "04",
+    "folder": "Collage Gastric Fundus, Hiatal Hernia and Hyperplastic Polyps",
+    "images": [
+      {
+        "file": "./references/diseases/04/img275.jpg",
+        "sha256": "8adc51bfdce8e2a7789b85af204ebbbdf01546c5460abe4d2935dd7110ebec5e"
+      }
+    ]
+  },
+  {
+    "id": "05",
+    "folder": "Collage Gastritis causec by alcohol abuse",
+    "images": [
+      {
+        "file": "./references/diseases/05/img148.jpg",
+        "sha256": "195b306a6649de708198bac02fc435cd9818dbff92872e7f8d93e74174a06f7c"
+      }
+    ]
+  },
+  {
+    "id": "06",
+    "folder": "Collage Hiatal hernia",
+    "images": [
+      {
+        "file": "./references/diseases/06/img117.jpg",
+        "sha256": "439872f1ecc8e2d4e561f8c498dee886808f69bf10da4e9001d847aa8ca610a1"
+      },
+      {
+        "file": "./references/diseases/06/img275.jpg",
+        "sha256": "8adc51bfdce8e2a7789b85af204ebbbdf01546c5460abe4d2935dd7110ebec5e"
+      }
+    ]
+  },
+  {
+    "id": "07",
+    "folder": "Collage Hyperplastic polyps in the duodenal bulb",
+    "images": [
+      {
+        "file": "./references/diseases/07/collage41.jpg",
+        "sha256": "85e03e43ff4e12cd0ba7d8683214b852afb7f30149837138ed94170983bf1b7f"
+      }
+    ]
+  },
+  {
+    "id": "08",
+    "folder": "Collage Mucosa in the duodenal bulb in a patient with coeliac disease",
+    "images": [
+      {
+        "file": "./references/diseases/08/img178.jpg",
+        "sha256": "bffd3ee0ad463b26b1d1afcdca474694ac118b87c6ecf1747415a39da77d9467"
+      }
+    ]
+  },
+  {
+    "id": "09",
+    "folder": "Collage Papilla of Vater (Major duodenal papilla) - normal anatomy",
+    "images": [
+      {
+        "file": "./references/diseases/09/img193.jpg",
+        "sha256": "58fe573ea3bd57703a30880889e819da4f2b1deb867a09f0503788ec7add44b7"
+      }
+    ]
+  },
+  {
+    "id": "10",
+    "folder": "Collage Small hyperplastic polyps in stomach",
+    "images": [
+      {
+        "file": "./references/diseases/10/collage17.jpg",
+        "sha256": "47c2e7547616c0dae2704b9d31d2573c419704672191a009c7c5a7c39354565d"
+      },
+      {
+        "file": "./references/diseases/10/collage40.jpg",
+        "sha256": "fb2436dce6b815cf141863674236f821da7ac3b60208c0ed4b082725f792850a"
+      },
+      {
+        "file": "./references/diseases/10/collage5.jpg",
+        "sha256": "0772084446f0943e0d898721b2162ed17125712a0c74dd4dae4892389460f141"
+      },
+      {
+        "file": "./references/diseases/10/collage8.jpg",
+        "sha256": "106dbe3748e15359f98f6456c5f65e5a5fd937d809e3774c0d5e5888234050a4"
+      }
+    ]
+  },
+  {
+    "id": "11",
+    "folder": "Collage Submucosal gastric GISTs",
+    "images": [
+      {
+        "file": "./references/diseases/11/collage12.jpg",
+        "sha256": "60d24c2f3fc0ecdf17ec9dbd93270631e13e27e2950ccce7eb566e76fe5e18bc"
+      }
+    ]
+  },
+  {
+    "id": "12",
+    "folder": "Collage Tubular Adenoma in the Descending Duodenum in a Patient with Familial Adenomatosis Coli",
+    "images": [
+      {
+        "file": "./references/diseases/12/img147.jpg",
+        "sha256": "adcb28778e8134d0fa7653b725a99d65c10394df9fdde2fdec16bb8b86eb826c"
+      }
+    ]
+  },
+  {
+    "id": "13",
+    "folder": "CollageHiatal hernia from below",
+    "images": [
+      {
+        "file": "./references/diseases/13/img115.jpg",
+        "sha256": "2524b2ddff2c2ee3662c3b1b0e92d79d30129b50cf79eec4e82bacab78427373"
+      },
+      {
+        "file": "./references/diseases/13/img116.jpg",
+        "sha256": "46b78d0b74f01a498b645a9efd328fda8633b6bcec7b246be44fd2b8b3fae02d"
+      }
+    ]
+  },
+  {
+    "id": "14",
+    "folder": "Crohns disease in the oesophagus",
+    "images": [
+      {
+        "file": "./references/diseases/14/0605.jpg",
+        "sha256": "bcc5704b3aaf1e55cee40e0658affcbc99d0c43b29c44a253b650614067a7ad8"
+      }
+    ]
+  },
+  {
+    "id": "15",
+    "folder": "duodenal ulcer disease",
+    "images": [
+      {
+        "file": "./references/diseases/15/img230.jpg",
+        "sha256": "4e4c382525bf755b5aa48ae0f8bd5537847e57a0f8fed4dc55d0a364adbce5ed"
+      },
+      {
+        "file": "./references/diseases/15/img246.jpg",
+        "sha256": "818a3cb7104856ae906e08d73e961a57089bdd843f5b84808231eadaf1337832"
+      },
+      {
+        "file": "./references/diseases/15/img247.jpg",
+        "sha256": "f629833601bfb49333f11cb27e81ba5e4bc1637af4de3435e8533fe2b7ad0474"
+      }
+    ]
+  },
+  {
+    "id": "16",
+    "folder": "esophageal diverticulum",
+    "images": [
+      {
+        "file": "./references/diseases/16/y0384.jpg",
+        "sha256": "0d529960e587746fa78d1b5b0521e218db9fe458b174bb6ce23eb14540aee092"
+      },
+      {
+        "file": "./references/diseases/16/y0385.jpg",
+        "sha256": "2ebaee0ffa812f124143ab0fcd07c064c6cc960f3d45e673749afabd8e3b1613"
+      },
+      {
+        "file": "./references/diseases/16/ya488x.jpg",
+        "sha256": "9ba40f15795c05aed37c2d71cc5885b49c910ede9ae60ffc47e459e1b5197f59"
+      }
+    ]
+  },
+  {
+    "id": "17",
+    "folder": "Esophageal Inlet Patch",
+    "images": [
+      {
+        "file": "./references/diseases/17/Y0471.jpg",
+        "sha256": "e725e9baac1b89a5b9a0c8dc8397eb40579145d3d587045898d363d875163afe"
+      },
+      {
+        "file": "./references/diseases/17/yn0234.jpg",
+        "sha256": "d6b127525a9422ee4a44aeab1edf66fc5af02bcc4d6ecb2807746fd35a1f97f2"
+      },
+      {
+        "file": "./references/diseases/17/yn0235.jpg",
+        "sha256": "ba5d638f4803fd4427a74dd8dae07489285b74470e244e890818a1ec71fd42f0"
+      }
+    ]
+  },
+  {
+    "id": "18",
+    "folder": "Esophageal varices caused by portal hypertension",
+    "images": [
+      {
+        "file": "./references/diseases/18/YN0062.jpg",
+        "sha256": "1dfa5aaddd7eef33b2ee5d86658cd14d55bc497189330288eb0e86bb37ff506e"
+      },
+      {
+        "file": "./references/diseases/18/YN0063.jpg",
+        "sha256": "7314af35158158233f690efa84509d2a711f208322481dceb168c23fee743bd1"
+      },
+      {
+        "file": "./references/diseases/18/YN0065.jpg",
+        "sha256": "e59bcc2d20229abf0ca0d9a7e574c4c56ab6f04556a4fc9eb94c32cea128c340"
+      }
+    ]
+  },
+  {
+    "id": "19",
+    "folder": "gastric metaplasia in duodenal bulb",
+    "images": [
+      {
+        "file": "./references/diseases/19/img194.jpg",
+        "sha256": "e9b91116aa583d614788144194d4f2a7b5ef460f66e45c762814e15cf7771c70"
+      }
+    ]
+  },
+  {
+    "id": "20",
+    "folder": "Oesophageal diverticulum",
+    "images": [
+      {
+        "file": "./references/diseases/20/vid1012.jpg",
+        "sha256": "a036efd3f3d6c2c8e7e92c756ad7827b536606c503391901177e7b602ee5eb20"
+      },
+      {
+        "file": "./references/diseases/20/vid1013.jpg",
+        "sha256": "0cd330adb9d5276dfff3ee92d608fd0f16662a101da6298708249d4dc6e7f159"
+      },
+      {
+        "file": "./references/diseases/20/vid1014.jpg",
+        "sha256": "b7b906c587062fa134ca53e49100e96dd899274b3678e4c68c297418cae7b116"
+      },
+      {
+        "file": "./references/diseases/20/yn0401.jpg",
+        "sha256": "fa9d29dffcafaf5b7bc4658a515264a38117b9780288b951b948355b4b71dcc1"
+      },
+      {
+        "file": "./references/diseases/20/yn0402.jpg",
+        "sha256": "339c190bf6915060deff0ade9f5093bc442171833f421db2b487925b06fba075"
+      },
+      {
+        "file": "./references/diseases/20/yn0403.jpg",
+        "sha256": "8460e9d407bdbc1b1484c1e89eac785d3a5cffa7c60948559f432a5f3dad75d2"
+      }
+    ]
+  },
+  {
+    "id": "21",
+    "folder": "Oesophageal Glycogenic Acanthosis",
+    "images": [
+      {
+        "file": "./references/diseases/21/im0022.jpg",
+        "sha256": "074efed8edddcd44fb1d705bef9e76a26bf9e0d20271454a6adeea71f0579b65"
+      },
+      {
+        "file": "./references/diseases/21/im0023.jpg",
+        "sha256": "48371d99d6176da038fa2a6fbc80894a8fe44d5b074cc7cc699d0ba1cffb0f5b"
+      },
+      {
+        "file": "./references/diseases/21/im0025.jpg",
+        "sha256": "f992f8b57e2f9d7da2f57f9da2df4a77ce2d8975a91e0ef9c0bbb04a4b687064"
+      }
+    ]
+  },
+  {
+    "id": "22",
+    "folder": "Reflux oesophagitis (Grade B, Los Angeles Classification)",
+    "images": [
+      {
+        "file": "./references/diseases/22/vid1501.jpg",
+        "sha256": "15aed365cba804b06c887dec3a32bce684965cc05c8c8afb03e0753fd3683e15"
+      },
+      {
+        "file": "./references/diseases/22/vid1502.jpg",
+        "sha256": "605e3521abe8ca83bbf69dba7a9822da8fa0511d2c4ad2796c2a6560a646fed0"
+      },
+      {
+        "file": "./references/diseases/22/vid1503.jpg",
+        "sha256": "f7450f5af1ae51d28e9561e7061b999c5d6c076270c032f0862ddb6c7d77a121"
+      }
+    ]
+  },
+  {
+    "id": "23",
+    "folder": "Reflux oesophagitis (Grade D, Los Angeles Classification)",
+    "images": [
+      {
+        "file": "./references/diseases/23/ya060n.jpg",
+        "sha256": "6bc7d12bfe9fd2c25c074b26fe6956ff47675c24a9c91528259b1b4051b50b34"
+      },
+      {
+        "file": "./references/diseases/23/ya062n.jpg",
+        "sha256": "e1fadd7a4c264f2799d1b013d8080d33af1962ce9870bf025ffb3c0b6aa4f0e8"
+      },
+      {
+        "file": "./references/diseases/23/ya063n.jpg",
+        "sha256": "f843f2bb7fd650f4f3ebaeaadaedb0c87e986aa2c17f8a8b4ad7b0bdc81df9f8"
+      }
+    ]
+  }
+]

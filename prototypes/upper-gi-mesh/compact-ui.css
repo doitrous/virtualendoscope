@@ -1,0 +1,52 @@
+/* Quiet atlas UI. No decorative status dots or explanatory blocks. */
+[hidden]{display:none!important}
+header{height:64px!important;min-height:64px;padding:10px 22px!important;flex-wrap:nowrap;gap:8px}
+.brand{margin-right:auto;font-size:17px;letter-spacing:.19em}.brand b{font-weight:650}
+header button{white-space:nowrap}.session-actions{order:5}#pause{min-width:96px}
+main{height:calc(100dvh - 92px);min-height:560px;padding:12px 18px;gap:14px;grid-template-columns:minmax(0,1fr) 292px}
+.scope-panel{max-height:none;min-height:0}.panel-top{height:40px;flex-shrink:0;text-transform:none;letter-spacing:0!important}
+.panel-top span:last-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:65%;font-size:11px}
+aside{padding:14px;display:flex;flex-direction:column;gap:14px;overflow:auto}
+.case-picker{padding:16px;background:linear-gradient(145deg,#fff8fa,#f8f1f4);border:1px solid #eed5df;border-radius:12px;box-shadow:0 3px 12px #70234106}
+.case-picker>label:first-child{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:#99506a;margin-bottom:8px}
+#disease-select{font:600 14px inherit;width:100%;padding:11px 28px 11px 10px;background:#fff;border:1px solid #e3b7c8;border-radius:8px;color:#612c40;min-width:0;cursor:pointer}
+.case-actions{display:flex;gap:8px;margin-top:12px}.case-actions button{border:0;background:none;font:12px inherit;color:#9c385a;padding:6px 0;cursor:pointer}.case-actions button:first-child{margin-right:auto;font-weight:600}
+#related-row{display:flex;align-items:flex-start;gap:7px;font-size:11px;color:#7f4b5d;border-top:1px solid #ead7de;padding-top:10px;margin-top:8px}#related-row input{accent-color:#d13a63}
+#case-status{font-size:11px;margin:0;color:#8d4660}#case-status:empty{display:none}
+.section-title{margin:0;font-size:11px;letter-spacing:0}#overview{height:180px;flex-shrink:0}
+.region-control{font-size:11px;color:#78808e;display:flex;justify-content:space-between;align-items:center;gap:8px}.region-control select{max-width:180px}
+select{border:1px solid #e2e5eb;border-radius:7px;padding:7px;color:#465064;background:#fafbfc;font:12px inherit}
+#functions{gap:7px}#functions button{font-size:12px;padding:10px 6px;background:#fafbfc}.fluid-status{margin:0}.fluid-status label{font-size:11px}
+.scope-footer{padding:9px 12px;min-height:46px;gap:14px}.scope-footer #mechanics{margin-left:auto;font-size:10px}.speed-control{display:flex;gap:8px;align-items:center;font-size:11px;color:#77808f}.speed-control select{padding:5px}
+.location{top:18px;left:20px}.location h1{font-size:19px;margin:0}.scope-bottom{bottom:14px;left:18px;right:18px}#motility{display:none}#instruction{font-size:10px}#fps{font-size:10px;opacity:.65}
+footer{height:24px;justify-content:center;font-size:9px;letter-spacing:0}
+.compact-dialog{max-width:420px;width:90vw;padding:22px}.compact-dialog dl{gap:12px}.compact-dialog .options{border:0;padding:0;margin:0 0 20px}
+dialog .reference-heading{gap:20px}dialog h2{font-size:19px;font-weight:600}.reference-heading button{cursor:pointer;padding:8px 12px;border-radius:6px}
+#case-dialog{width:min(900px,92vw);max-height:88dvh;padding:24px}#case-images{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}#case-images figure{margin:0}#case-images img{width:100%;height:auto;border-radius:8px}#case-images figcaption{font-size:10px;color:#84909b;padding-top:6px}#case-sources{display:flex;flex-wrap:wrap;gap:12px}#case-sources a{font-size:12px;color:#b4345d}
+@media(max-width:800px){header{flex-wrap:wrap;height:auto!important}.session-actions{margin-left:auto}main{grid-template-columns:minmax(0,1fr) 245px}.brand{font-size:14px}aside{padding:10px}#wave{display:none}.case-picker{padding:10px}}
+@media(max-width:640px){main{height:auto;grid-template-columns:1fr;min-height:0}.scope-panel{height:65dvh;min-height:420px}aside{overflow:visible}.scope-footer{gap:8px}#case-images{grid-template-columns:1fr}.speed-control{font-size:0}.speed-control select{font-size:11px}header{padding:10px!important}}
+
+/* Disease buttons share the scope-function palette and interaction states. */
+#walkthrough-button{color:#a72a4c;border-color:#eab7c5;background:#fff5f8;min-width:140px}
+#tour-caption{position:absolute;z-index:4;top:54px;left:18px;right:18px;padding:12px 15px;border:1px solid #ffffff30;border-radius:10px;background:#11151ee8;color:#fff;pointer-events:none;box-shadow:0 4px 20px #0003}
+#tour-caption strong{display:block;font-size:14px;font-weight:600}#tour-caption span{display:block;margin-top:4px;font-size:11px;color:#e4d5dc;line-height:1.4}
+main{grid-template-columns:216px minmax(0,1fr) 260px}
+.disease-rail{padding:12px;overflow:hidden}
+.disease-rail .case-picker{display:flex;flex-direction:column;min-height:0;height:100%;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+#disease-heading{margin:2px 0 12px;font-size:12px;font-weight:600;color:#566174}
+#disease-buttons{display:grid;gap:6px;overflow-y:auto;min-height:0;scrollbar-width:thin;padding:2px}
+#functions button,#disease-buttons button{background:#fafbfc;color:#485367;border:1px solid #dfe4ec;border-radius:8px;font-size:12px;padding:10px 9px;cursor:pointer}
+#disease-buttons button{text-align:left;line-height:1.35;white-space:normal}
+#functions button:hover,#disease-buttons button:hover{background:#f0f2f6;border-color:#c7ccd5}
+#functions button.held,#disease-buttons button[aria-pressed=true]{background:var(--rose);border-color:var(--rose);color:#fff}
+#functions button:focus-visible,#disease-buttons button:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+#disease-buttons button:disabled{opacity:.55;cursor:wait}
+#disease-buttons button,#functions button,header button{transition:background-color 90ms ease,border-color 90ms ease;touch-action:manipulation}
+#disease-buttons button[aria-pressed=true],#functions button.held{color:#fff}
+.scope-panel,main>aside{contain:layout paint}
+@media(prefers-reduced-motion:reduce){#disease-buttons button,#functions button,header button{transition:none}}
+.disease-rail .case-actions,.disease-rail #related-row,.disease-rail #case-status{flex-shrink:0}
+.disease-rail .case-actions{padding-top:10px;border-top:1px solid var(--line)}
+@media(max-width:1000px){main{grid-template-columns:185px minmax(0,1fr) 225px;padding:10px;gap:10px}.scope-footer{flex-wrap:wrap}.scope-footer #mechanics{margin-left:0}}
+@media(max-width:800px){main{height:auto;grid-template-columns:180px minmax(0,1fr);align-items:start}.disease-rail{grid-row:1 / span 2;max-height:calc(100dvh - 110px);position:sticky;top:10px}.scope-panel{height:65dvh;min-height:420px}main>aside:not(.disease-rail){grid-column:2}.disease-rail .case-picker{max-height:calc(100dvh - 140px)}}
+@media(max-width:540px){main{grid-template-columns:1fr}.disease-rail{grid-row:auto;position:static;max-height:250px}.disease-rail .case-picker{max-height:225px}#disease-buttons{grid-template-columns:1fr 1fr}main>aside:not(.disease-rail){grid-column:1}.disease-rail .case-actions{margin-top:8px;padding-top:8px}}

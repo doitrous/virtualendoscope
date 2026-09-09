@@ -1,0 +1,106 @@
+{
+  "normal": {
+    "main": "normal.main.38db5359154c.bin",
+    "map": "normal.map.74bb182ed577.bin"
+  },
+  "reflux-b": {
+    "main": "reflux-b.main.ab3ec8f50408.bin",
+    "map": "reflux-b.map.74bb182ed577.bin"
+  },
+  "hernia+reflux-b": {
+    "main": "hernia+reflux-b.main.c26d430fef5d.bin",
+    "map": "hernia+reflux-b.map.9d8c096c62da.bin"
+  },
+  "reflux-d": {
+    "main": "reflux-d.main.34ed5cb8015c.bin",
+    "map": "reflux-d.map.74bb182ed577.bin"
+  },
+  "hernia+reflux-d": {
+    "main": "hernia+reflux-d.main.025382d2bff8.bin",
+    "map": "hernia+reflux-d.map.9d8c096c62da.bin"
+  },
+  "varices": {
+    "main": "varices.main.de89c2330887.bin",
+    "map": "varices.map.330c4ebce12e.bin"
+  },
+  "portal-gastropathy+varices": {
+    "main": "portal-gastropathy+varices.main.5c5b24854e84.bin",
+    "map": "portal-gastropathy+varices.map.330c4ebce12e.bin"
+  },
+  "inlet": {
+    "main": "inlet.main.0a8157124701.bin",
+    "map": "inlet.map.74bb182ed577.bin"
+  },
+  "acanthosis": {
+    "main": "acanthosis.main.9652063b9f03.bin",
+    "map": "acanthosis.map.ec41b0207638.bin"
+  },
+  "diverticulum": {
+    "main": "diverticulum.main.b266a56e9fec.bin",
+    "map": "diverticulum.map.09a1473babc3.bin"
+  },
+  "crohn": {
+    "main": "crohn.main.1c16bb86eb69.bin",
+    "map": "crohn.map.74bb182ed577.bin"
+  },
+  "cancer": {
+    "main": "cancer.main.dd728513cbe3.bin",
+    "map": "cancer.map.55b4a244ce07.bin"
+  },
+  "hernia": {
+    "main": "hernia.main.ae962abd9d4a.bin",
+    "map": "hernia.map.9d8c096c62da.bin"
+  },
+  "hernia-polyps": {
+    "main": "hernia-polyps.main.e934be862e2e.bin",
+    "map": "hernia-polyps.map.637e8301c244.bin"
+  },
+  "alcohol": {
+    "main": "alcohol.main.817df0b96ff8.bin",
+    "map": "alcohol.map.74bb182ed577.bin"
+  },
+  "gastric-polyps": {
+    "main": "gastric-polyps.main.6164534662d3.bin",
+    "map": "gastric-polyps.map.cbf5c677dc0b.bin"
+  },
+  "gastric-polyps+hp-gastritis": {
+    "main": "gastric-polyps+hp-gastritis.main.5bd9f4c1b08f.bin",
+    "map": "gastric-polyps+hp-gastritis.map.cbf5c677dc0b.bin"
+  },
+  "gist": {
+    "main": "gist.main.5640ffe1df6e.bin",
+    "map": "gist.map.03466cf497a8.bin"
+  },
+  "celiac": {
+    "main": "celiac.main.4e559f6366f0.bin",
+    "map": "celiac.map.dd0f6741861b.bin"
+  },
+  "duodenal-ulcer": {
+    "main": "duodenal-ulcer.main.5537b4fcceaf.bin",
+    "map": "duodenal-ulcer.map.4689c6f55e70.bin"
+  },
+  "duodenal-ulcer+hp-gastritis": {
+    "main": "duodenal-ulcer+hp-gastritis.main.f67b6738e4ad.bin",
+    "map": "duodenal-ulcer+hp-gastritis.map.4689c6f55e70.bin"
+  },
+  "bulb-polyps": {
+    "main": "bulb-polyps.main.06bf7cb3130b.bin",
+    "map": "bulb-polyps.map.dcfc741ab2f2.bin"
+  },
+  "metaplasia": {
+    "main": "metaplasia.main.db4ede217d93.bin",
+    "map": "metaplasia.map.a666617c77b4.bin"
+  },
+  "duodenal-sel": {
+    "main": "duodenal-sel.main.9f3b2556d1ae.bin",
+    "map": "duodenal-sel.map.51985a940276.bin"
+  },
+  "fap": {
+    "main": "fap.main.be0677109d61.bin",
+    "map": "fap.map.1a3afa2bf2d2.bin"
+  },
+  "papilla": {
+    "main": "papilla.main.37caa9696b3c.bin",
+    "map": "papilla.map.b498d2d784fd.bin"
+  }
+}

@@ -1,0 +1,40 @@
+/* Matches the existing AnatomyAtlas and shared Nishany light theme tokens. */
+:root{color:#161920;background:#f6f7fa;--rose:#d13a63;--line:#e3e7ef;--muted:#687181}
+header{flex-wrap:wrap;min-height:72px;height:auto!important;padding-top:10px!important;padding-bottom:10px!important}
+aside{min-width:0}.scope-panel{max-height:1000px}#look-back{background:#fbeaf0;color:#a72a4c;border:1px solid #eab7c5;border-radius:6px;padding:6px 9px;cursor:pointer}
+header{background:#fff;border-color:var(--line);height:72px;padding:0 24px;gap:14px}
+.brand{color:var(--rose)}.brand b{color:#161920}.brand span{color:#687181;border-color:var(--line)}
+.checkpoint{color:#687181}.checkpoint span{color:#161920}
+header button,.section-title button{background:#fff;border:1px solid var(--line);color:#333c4a;font-size:12px;box-shadow:0 1px 2px #18233608;border-radius:8px}
+header button:hover,.section-title button:hover{background:#f4f5f8;border-color:#c7ccd5}
+.session-actions{display:flex;gap:8px}.session-actions #wave{background:var(--rose);color:#fff;border-color:var(--rose)}
+.session-actions #wave{background:#fff;color:#59677b;border-color:var(--line)}.session-actions #pause{background:var(--rose);color:#fff;border-color:var(--rose);min-width:100px}
+.scope-bottom{flex-wrap:wrap;gap:8px}#motility{flex-basis:100%;color:#e7bac7;font-size:11px;order:-1}
+.session-actions #pause[aria-pressed=true]{background:#fceaf0;color:#a72a4c;border-color:#eab7c5}
+main{gap:18px;padding:18px 22px 12px;grid-template-columns:minmax(0,1fr) 320px}
+.scope-panel{border-color:#dce0e6;border-radius:12px;box-shadow:0 4px 20px #15223608}
+.panel-top{background:#fff;border-color:var(--line);color:#535e70;font-size:11px;letter-spacing:.08em}
+.panel-top span:last-child{font-size:10px;color:#8992a0}.panel-top i,.checkpoint i,.dot,.mint-dot{background:var(--rose)}
+aside{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:0 3px 14px #15223605}
+.section-title{color:#566174;font-size:11px;letter-spacing:.07em}
+#overview{background:#f2f3f3;border-color:var(--line);border-radius:9px;height:200px}
+.map-note{font-size:10px;color:#697486}.map-note span:last-child{color:#8590a0}
+#landmarks button{background:#f7f8fa;border:1px solid #edf0f4;color:#344054;font-size:12px;border-radius:7px;min-height:38px}
+#landmarks button small,#landmarks button span{color:#929aa7}
+#landmarks button.active{background:#fbeaf0;border-color:#e7b3c3;color:#ae2d50}
+#landmarks button:hover{border-color:#d99bae}.muted{color:#788191;font-size:12px;line-height:1.5}
+dd{color:#4f596c;font-size:12px}kbd{background:#f6f7f9;border-color:#dde2e9;color:#525d70;font-size:11px}
+#functions button,#references{background:#fff;border-color:#dfe4ec;color:#485367;border-radius:8px}
+#functions button.held{background:var(--rose);border-color:var(--rose);color:#fff}
+.fluid-status label,.options label{color:#657083;font-size:12px}.options{border-color:var(--line)}
+.options select{background:#f6f7fa;border-color:var(--line);color:#425069}
+.options input[type=range],.options input[type=checkbox],.fluid-status meter{accent-color:var(--rose)}
+.boundary{color:#7c8492;border-color:#e8c6d0;font-size:11px;line-height:1.6}
+.scope-footer{background:#fff;border-color:var(--line);color:#627084;font-size:10px}.scope-footer span:last-child{color:#778294}
+footer{color:#8a94a4;letter-spacing:.08em;font-size:10px}
+.location{color:#fff}.location small{color:#ced4dc}.location span{color:#dfccd3}
+dialog{background:#fff;color:#161920;border-color:#dce2eb;box-shadow:0 16px 70px #18223633}
+dialog p{color:#68758a}.reference-heading button,.video-select select,#inspect-video-region{background:#f7f8fb;border-color:#dde3ec;color:#344054}
+#reference-grid figure{background:#f3f5f8}#reference-grid figcaption{color:#59677b}
+@media(max-width:1000px){.brand span{display:none}main{grid-template-columns:minmax(0,1fr) 280px;padding:12px}.session-actions button{padding:9px}}
+@media(max-width:700px){header{height:auto;min-height:72px;flex-wrap:wrap;padding:12px}.session-actions{margin-left:auto}main{grid-template-columns:1fr}.scope-panel{height:65vh;min-height:420px}.scope-footer{font-size:9px}aside{overflow:visible}}
