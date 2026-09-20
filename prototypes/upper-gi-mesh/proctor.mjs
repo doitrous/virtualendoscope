@@ -1,5 +1,7 @@
 import { RUBRICS } from './rubrics.mjs';
 
+const FLAG_THRESHOLD = 0.7;
+
 // Real-time technique proctor. Ticks against the current sim state, sends
 // the active stop's rubric + state to an injected `evaluate` (Task 8 wires
 // this to the examiner server proxy), and turns verdict changes into
@@ -42,7 +44,7 @@ export function createProctor({ evaluate }) {
 
       for (const flag of rubric.flags ?? []) {
         const p = result.flags?.[flag.id] ?? 0;
-        if (p > 0.7 && !prevVerdicts[`_flag_${flag.id}`]) {
+        if (p > FLAG_THRESHOLD && !prevVerdicts[`_flag_${flag.id}`]) {
           lines.push({ id: flag.id, type: 'warning', text: `Warning: ${flag.instructions}` });
           prevVerdicts[`_flag_${flag.id}`] = true;
         }
