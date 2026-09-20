@@ -1,0 +1,10 @@
+{
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test proctor.test.mjs"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

@@ -4,8 +4,9 @@ import { landmarks } from './anatomy.mjs';
 import {referenceFiles} from './references.mjs';
 import {tissueField,createTissueMaterial,dynamicField,updateFluids,deformGLSL,deformPoint} from './tissue.mjs';
 import {createOptics,createFluidEffects} from './optics.mjs';
-import {GuidedTrack} from './guided-track.mjs';
+import {GuidedTrack,stops} from './guided-track.mjs';
 import {createGuidedScope} from './guided-scope.mjs';
+import {createProctor} from './proctor.mjs';
 import {videoObservations} from './video-observations.mjs';
 import {createDiseaseModel} from './disease-model.mjs';
 import {installDiseaseUI} from './disease-ui.mjs';
@@ -83,6 +84,28 @@ const sun=new T.DirectionalLight('#ffe9e1',2.2);sun.position.set(3,7,10);mapScen
 const mapCamera=new T.PerspectiveCamera(38,1,.1,100);mapCamera.position.set(0,1,24);
 const orbit=new OrbitControls(mapCamera,mapRenderer.domElement);orbit.target.set(0,1,0);orbit.enableDamping=true;orbit.minDistance=13;orbit.maxDistance=40;orbit.update();
 const track=new GuidedTrack();
+// Proctor ticks against the local proxy (server.mjs) so TYPESAFE_API_KEY never reaches the browser.
+const proctor=createProctor({async evaluate(rubric,evidence){
+ const res=await fetch('/api/proctor',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({rubric,evidence})});
+ if(!res.ok)throw new Error(`Proctor ${res.status}`);
+ return res.json();
+}});
+const coachingEl=document.createElement('div');coachingEl.id='proctor-coaching';
+coachingEl.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;gap:4px;align-items:center;pointer-events:none';
+document.body.appendChild(coachingEl);
+function showCoachingLine({id,type,text}){
+ coachingEl.querySelector(`[data-id="${id}"]`)?.remove();
+ const el=document.createElement('div');el.dataset.id=id;el.textContent=text;
+ el.style.cssText=`padding:6px 16px;border-radius:8px;font-size:14px;color:white;opacity:1;transition:opacity 0.5s;background:${type==='warning'?'#dc2626':'#16a34a'}`;
+ coachingEl.appendChild(el);
+ setTimeout(()=>{el.style.opacity='0';},2500);setTimeout(()=>el.remove(),3000);
+}
+// meshCheckpoint.getState() has no notion of "current stop" — nearest stop by arc-length progress.
+function currentStopId(){
+ let best=0,bestDist=Infinity;
+ for(let i=0;i<stops.length;i++){const d=Math.abs(track.stopProgress[i]-track.progress);if(d<bestDist){bestDist=d;best=i;}}
+ return stops[best].id;
+}
 document.querySelector('#look-back').onclick=()=>{yaw=Math.PI;pitch=0;};
 const guidedScope=createGuidedScope(track);scene.add(guidedScope.mesh);
 const mapShaft=new T.Mesh(guidedScope.mesh.geometry,guidedScope.mesh.material);mapShaft.frustumCulled=false;mapScene.add(mapShaft);
@@ -211,6 +234,7 @@ function render(now){requestAnimationFrame(render);if(now-last<1000/60-1)return;
     document.querySelector('#motility').textContent=`Antral peristalsis · ${motionLabel}`;
     document.querySelector('#gas').value=simulation.gas;document.querySelector('#fluid').value=simulation.fluid;
     document.querySelectorAll('[data-code]').forEach(b=>b.classList.toggle('held',keys.has(b.dataset.code)));
+    proctor.tick({...simulation,currentStop:currentStopId(),disease:activeDiseaseModel.ids[0],progress:track.progress}).then(lines=>{for(const line of lines)showCoachingLine(line);});
   }
 }
 requestAnimationFrame(render);
