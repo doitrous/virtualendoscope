@@ -1,0 +1,49 @@
+[
+  {
+    "pmcid": "PMC7455694",
+    "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7455694/",
+    "verifiedAt": "2026-10-13",
+    "verificationMethod": "Europe PMC open-access fullTextXML; publication figure captions checked for separate credit or reuse exclusions",
+    "permissions": "\u00a9 The Author(s) 2020Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article\u2019s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article\u2019s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.The Creative Commons Public Domain Dedication waiver http://creativecommons.org/publicdomain/zero/1.0/ applies to the metadata files associated with this article.",
+    "figures": [
+      {
+        "id": "Fig1",
+        "caption": "Image examples of the various labeled classes for images and/or videos.",
+        "imageFilename": "41597_2020_622_Fig1_HTML.jpg"
+      }
+    ]
+  },
+  {
+    "pmcid": "PMC4656951",
+    "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4656951/",
+    "verifiedAt": "2026-10-13",
+    "verificationMethod": "Europe PMC open-access fullTextXML; publication figure captions checked for separate credit or reuse exclusions",
+    "permissions": "\u00a9Carol Davila University Press\nThis is \nan open-access article distributed under the terms of the Creative \nCommons Attribution License, which permits unrestricted use,\ndistribution, and reproduction in any medium, provided the original work \nis properly cited.",
+    "figures": [
+      {
+        "id": "F2",
+        "caption": "WLE, Scalloping of the Kerckring folds in the descending duodenum",
+        "imageFilename": "JMedLife-08-452-g002.jpg"
+      },
+      {
+        "id": "F3",
+        "caption": "WLE, Atrophy with reduction of duodenal folds",
+        "imageFilename": "JMedLife-08-452-g003.jpg"
+      }
+    ]
+  },
+  {
+    "pmcid": "PMC4976684",
+    "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4976684/",
+    "verifiedAt": "2026-10-13",
+    "verificationMethod": "Europe PMC open-access fullTextXML; publication figure captions checked for separate credit or reuse exclusions",
+    "permissions": "\u00a9 The Author(s) 2016. Published by Oxford University Press and Sixth Affiliated Hospital of Sun Yat-Sen UniversityThis is an Open Access article distributed under the terms of the Creative Commons Attribution License (http://creativecommons.org/licenses/by/4.0/), which permits unrestricted reuse, distribution, and reproduction in any medium, provided the original work is properly cited.",
+    "figures": [
+      {
+        "id": "gow018-F1",
+        "caption": "A)\u00a0Small oesophageal varices (grade 1, form F1); B) Small and beady oesophageal varices (grade 2, form F2); C) Large oesophageal varices (grade 3, form F3); D) Large white oesophageal varices that look like mucosal folds; E) Grade 3 oesophageal varices with red colour signs (whip-like red wale marks); F) Large oesophageal varices with red colour signs (cherry red spots and red wale marks); G) Diffuse red colour signs (red wale marks) over oesophageal varices; H) Large oesophageal varices with diffuse redness.",
+        "imageFilename": "gow018f1p.jpg"
+      }
+    ]
+  }
+]

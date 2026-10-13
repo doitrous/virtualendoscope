@@ -38,7 +38,9 @@ export function createOptics(renderer,scene,camera){
   composer.addPass(pass);composer.addPass(new OutputPass());
   const meter=new T.WebGLRenderTarget(16,16,{type:T.UnsignedByteType,depthBuffer:true});
   const pixels=new Uint8Array(16*16*4);let meterClock=1,targetExposure=.9;
-  return {composer,uniforms:pass.uniforms,updateExposure(dt){
+  let disposed=false;
+  return {composer,uniforms:pass.uniforms,dispose(){if(disposed)return;disposed=true;meter.dispose();composer.passes.forEach(p=>p.dispose?.());composer.dispose();},updateExposure(dt){
+    if(disposed)return;
     meterClock+=dt;
     if(meterClock>.20){
       meterClock=0;const oldTarget=renderer.getRenderTarget(),oldTone=renderer.toneMapping;

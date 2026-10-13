@@ -1,0 +1,127 @@
+/* Session workspaces keep the monitor, instrument and feedback in sight together. */
+:root{--paper:#f3f6f6;--white:#fcfdfc;--ink:#173840;--teal:#287970;--muted:#62777a;--line:#d8e2e1}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+button{touch-action:manipulation}
+#toast{max-width:min(550px,90vw)}
+.patient-inset-label{display:none}
+.real-handpiece{display:block;position:absolute;width:165px;height:240px;object-fit:contain;left:0;top:-44px;filter:drop-shadow(0 5px 8px #132c3b33);pointer-events:none}
+.controller-visual .glove,.controller-visual .scope-handle,.controller-visual .scope-cable{visibility:hidden}
+.controller-visual>span{position:absolute;bottom:0;left:8px;font-size:9px;letter-spacing:1px}
+.controller-visual>span small{font-size:8px;letter-spacing:.3px}
+#learning-studio{height:100%;min-height:0}
+dialog.library-modal{height:min(830px,94dvh);max-height:94dvh;width:min(1180px,96vw);padding:0;overflow:hidden;background:#f5f7f8}
+dialog.library-modal .modal-top{display:none}
+dialog.library-modal #modal-body{height:100%;min-height:0}
+.library-modal .learning-studio{height:100%}
+.library-modal .learning-studio .learning-layout{margin:0}
+@media(min-width:1001px){
+ body{overflow:hidden}
+ #app{display:flex;flex-direction:column;height:100dvh;min-height:620px}
+ .topbar{height:66px;min-height:66px;padding:0 23px}
+ .workspace{flex:1;min-height:0;grid-template-columns:210px minmax(0,1fr) 306px;overflow:hidden}
+ .simulation-stage{min-height:0!important}
+ .welcome{min-height:0}
+ .rail{padding:23px 18px;overflow-y:auto}
+ .rail-top{gap:9px}#case-summary{padding:17px 0}#case-summary h2{font-size:23px}
+ .case-icon{margin-bottom:12px}#journey{padding-top:20px}.journey-step{padding:12px 0}
+ .rail-bottom{padding-top:24px}
+ .coach{overflow:hidden}.coach-heading{padding:20px 22px 15px}.coach-tabs{margin:0 22px}
+ #coach-body{flex:1;overflow-y:auto;padding:22px;min-height:0;scrollbar-width:thin}
+ #coach-body h2{font-size:27px}#coach-body p{font-size:13px}.fineprint{font-size:11px!important;line-height:1.65!important}
+ .app-footer{height:29px;min-height:29px;font-size:9px;padding:0 22px}
+ .welcome-content{inset:45px 35px 28px}.welcome h1{font-size:clamp(49px,4.8vw,84px);line-height:1.05;margin-top:29px;margin-bottom:24px;letter-spacing:-2.5px}
+ .welcome .eyebrow{font-size:8px;max-width:270px}.welcome p{font-size:12px;line-height:1.7}.welcome-meta{gap:12px;font-size:8px}.welcome-notice{font-size:8px}
+ .operating .workspace{grid-template-columns:minmax(0,1fr) 306px}
+ .operating .rail{display:none}
+ .operating #scope-stage{padding:13px 18px 10px}
+ .operating #endoscope-view{flex:1;min-height:0;height:auto;border:1px solid #3e5858;border-radius:9px;background:#020808}
+ .operating #endoscope-view canvas{width:100%;height:100%;object-fit:contain}
+ .operating .monitor-toolbar{padding:0 0 10px;min-height:35px;font-size:10px}
+ .operating .monitor-toolbar>div>span{font-size:8px}.operating .monitor-toolbar .glass-button{font-size:10px;padding:6px 10px}
+ .operating .monitor-status{font-size:10px;padding:8px 0}
+ .operating .patient-strip{min-height:51px;padding-top:8px;gap:25px;flex-wrap:nowrap}
+ .operating .patient-strip strong{font-size:23px}.operating .patient-strip small{font-size:9px}.operating .patient-strip .ecg{max-width:145px}
+ .operating .patient-label{font-size:7px;width:79px}.operating .patient-strip .small-link{font-size:10px}
+ .operating .scope-osd{top:16px;left:18px}.operating .scope-caption{left:18px;bottom:13px;right:214px;font-size:10px}
+ .operating .operator-console{height:182px;min-height:182px;max-height:182px;padding:16px 24px;grid-template-columns:155px minmax(190px,1fr) minmax(200px,1fr) minmax(250px,1.2fr);gap:20px;overflow:hidden}
+ .operator-console>div+div{padding-left:20px}.console-title{font-size:12px;margin-bottom:11px}
+ .angle-controls label{margin:12px 0;font-size:10px}.angle-controls output{font-size:10px}
+ .fluid-buttons button{min-height:63px;font-size:10px}.fluid-meters{font-size:9px}
+ .advance-buttons button{min-height:38px;font-size:11px}.secondary-controls button{font-size:10px;min-height:31px}
+ .insertion-controls .text-button{font-size:10px;padding:9px 0}.operator-console .small-link{font-size:9px}
+ .controller-visual{height:148px;overflow:visible}
+ .operating #world-view{inset:auto 31px 103px auto;z-index:4;width:174px;height:111px;border:1px solid #789492;box-shadow:0 5px 15px #0005;border-radius:5px;pointer-events:none;overflow:hidden;background:#a7bcb9}
+ .operating #world-view>div{display:none!important}
+ .operating .patient-inset-label{display:block;position:absolute;bottom:88px;right:31px;width:174px;z-index:5;font-size:6px;letter-spacing:.4px;color:#9cb9b8;pointer-events:none}
+ .world-header{top:24px;left:23px;right:23px}.world-header h1{font-size:27px}.world-actions{top:150px;left:23px}
+ .world-footer{left:23px;right:23px;bottom:20px}.world-footer>span{font-size:8px}
+}
+@media(min-width:1001px) and (max-height:730px){
+ .topbar{height:58px;min-height:58px}.brand{font-size:20px}
+ .operating .operator-console{height:161px;min-height:161px;max-height:161px;padding:10px 22px;gap:17px}
+ .controller-visual{height:136px}.real-handpiece{height:219px;width:149px;top:-38px}.angle-controls label{margin:8px 0}
+ .console-title{margin-bottom:9px}.fluid-buttons button{min-height:53px}.secondary-controls{margin-top:7px}
+ .operating #world-view{width:149px;height:93px;bottom:105px}.operating .patient-inset-label{width:149px;bottom:91px}
+ .operating .scope-caption{right:190px}.coach-heading{padding:16px 22px 10px}.coach-tabs button{padding:10px 0}
+ .welcome-content{inset:28px 32px}.welcome h1{font-size:57px;margin:24px 0 20px}.welcome p{margin-bottom:19px}
+}
+@media(max-width:1000px){
+ .operating #app{display:flex;flex-direction:column}
+ .operating .topbar{order:0}.operating .workspace{display:contents}.operating .simulation-stage{order:1;height:480px;min-height:480px!important}
+ .operating .operator-console{order:2;grid-template-columns:1fr 1fr;gap:20px}.operating .coach{order:3}.operating .app-footer{order:4}
+ .operating .controller-visual{display:none}.operating .angle-controls{grid-column:1}.operating .insertion-controls{grid-column:2}.operating .fluid-controls{grid-column:1/-1}
+ .operating #endoscope-view{min-height:0}.operating .scope-caption{font-size:10px}.operating .scope-osd span{font-size:15px}
+ .operating .fluid-buttons{grid-template-columns:repeat(4,1fr);display:grid}.operating .fluid-buttons button{min-height:56px;font-size:11px}
+ .operator-console input[type=range]{min-height:25px}.operating .patient-strip .ecg{display:none}
+ #coach-body{max-height:none}.world-footer>span{line-height:1.8}.fineprint{font-size:11px!important}
+}
+@media(max-width:550px){
+ .operating .simulation-stage{height:395px;min-height:395px!important}.operating #scope-stage{padding:12px}
+ .operating .operator-console{padding:17px;gap:17px;grid-template-columns:1fr}
+ .operating .angle-controls,.operating .insertion-controls,.operating .fluid-controls{grid-column:auto}
+ .operating .angle-controls{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.operating .angle-controls .console-title{grid-column:1/-1}
+ .operating .angle-controls label{display:flex;flex-direction:column;gap:7px;align-items:stretch;margin:8px 0}.operating .angle-controls label:last-child{grid-column:1/-1}
+ .operator-console>div+div{padding-top:15px}.operating .patient-strip{gap:12px;min-height:54px;flex-wrap:wrap}.operating .patient-strip strong{font-size:18px}
+ .operating .patient-label{display:none}.operating .patient-strip .small-link{font-size:10px}.operating .scope-caption{font-size:8px}
+ .operating .monitor-toolbar .glass-button{max-width:110px}.modal-heading h2{font-size:32px}.learning-studio{font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){.world-header,.welcome{animation:none!important}}
+.live-coaching{position:sticky;top:-1px;z-index:3;background:var(--paper,#fff);padding:1px 0 9px;box-shadow:0 9px 12px -12px #203d45}
+.live-coaching h2{margin-top:12px}.live-coaching .guidance-card{margin-bottom:0}
+.atlas-heading{max-width:760px;margin-bottom:25px}.atlas-heading h2{font-size:36px;margin:12px 0}.atlas-heading p{font-size:14px}
+.clinical-atlas{display:grid;grid-template-columns:220px 1fr;gap:24px}.clinical-atlas nav{display:flex;flex-direction:column;gap:5px}.clinical-atlas nav button{text-align:left;border-radius:6px;padding:13px 12px;font-size:13px;border:1px solid var(--line)}.clinical-atlas nav button small{display:block;font-size:10px;margin-top:5px;color:var(--teal)}.clinical-atlas nav button[aria-pressed=true]{background:#e3eeeb;border-color:#6b9892}.clinical-atlas figure{margin:0;min-width:0}.clinical-atlas figure img{max-width:100%;max-height:510px;object-fit:contain;background:#10262b;display:block;width:100%;border-radius:7px}.clinical-atlas figcaption h3{margin:15px 0 7px;font-size:19px}.clinical-atlas figcaption p{margin:9px 0;font-size:13px}.clinical-atlas figcaption small{font-size:11px;line-height:1.6;color:var(--muted);display:block}.atlas-placeholder{padding:55px 25px;background:#e6eeec;border-radius:7px;color:var(--muted)}
+.instrument-explorer{display:grid;grid-template-columns:1fr 1fr;gap:30px}.instrument-picture{position:relative;height:490px;background:radial-gradient(ellipse,#bdcece,#e9eeee 66%);border-radius:12px;overflow:hidden}.instrument-picture img{height:100%;width:100%;object-fit:contain}.instrument-picture button{position:absolute;border:2px solid white;background:#2869c7;color:white;border-radius:50%;width:32px;height:32px;box-shadow:0 2px 12px #17384033}.instrument-picture button[aria-pressed=true]{background:#153a47;outline:5px solid #ffffff55}.instrument-explorer nav{display:grid;gap:4px;margin-bottom:24px}.instrument-explorer nav button{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}.instrument-explorer nav button span{font-size:10px;color:var(--muted);margin-right:13px}.instrument-explorer nav button[aria-pressed=true]{background:#e4eeec;color:var(--teal)}.instrument-explorer h3{font-size:23px;margin-bottom:12px}.instrument-explorer p{font-size:14px}.instrument-explorer .secondary{margin-top:20px}
+@media(max-width:700px){.clinical-atlas{grid-template-columns:1fr}.clinical-atlas nav{display:grid;grid-template-columns:1fr 1fr;gap:5px}.clinical-atlas nav button{padding:10px;font-size:11px}.instrument-explorer{grid-template-columns:1fr;gap:18px}.instrument-picture{height:330px}.instrument-explorer nav{grid-template-columns:1fr 1fr}.atlas-heading h2{font-size:29px}.atlas-heading p{font-size:12px}}
+
+/* Orientation practice retains the real monitor and the same input controls. */
+.demo-wheel-cue{display:none;position:absolute;left:64px;top:1px;width:67px;height:62px;pointer-events:none}
+.controls-demo .demo-wheel-cue{display:block}
+.demo-wheel-cue i{position:absolute;width:40px;height:40px;border:2px solid #b8f2e5;border-radius:50%;box-shadow:0 0 0 2px #123e4480}
+.demo-wheel-cue i:before{content:"";position:absolute;width:3px;height:11px;left:17px;top:2px;background:#ecfff6;border-radius:3px}
+.demo-wheel-cue i+i{width:27px;height:27px;left:17px;top:9px;border-color:#ffc891}
+.demo-wheel-cue i+i:before{left:10px;width:2px;height:8px;background:#ffe5c3}
+.angle-controls .demo-active-control{outline:2px solid #539a8d;outline-offset:5px;border-radius:3px;background:#e0eee8}
+.controls-demo .coach-tabs,.controls-demo .patient-strip,.controls-demo #world-view,.controls-demo .patient-inset-label{display:none!important}
+.controls-demo .scope-caption{right:18px}
+.controls-demo .insertion-controls,.controls-demo .fluid-controls{opacity:.45}
+.controls-demo .coach-heading>.eyebrow{font-size:0}
+.controls-demo .coach-heading>.eyebrow:after{content:"INSTRUMENT ORIENTATION";font-size:9px;letter-spacing:1px}
+.controls-demo .monitor-status #tip-label{font-size:0}
+.controls-demo .monitor-status #tip-label:after{content:"Insertion fixed · no case credit";font-size:10px}
+.welcome [data-action=control-demo]{display:block;font-size:12px;margin-top:12px;color:#e5f1ed;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:1000px){
+ .controls-demo .insertion-controls,.controls-demo .fluid-controls{display:none}
+ .controls-demo .operator-console{grid-template-columns:1fr}
+ .controls-demo .angle-controls{grid-column:1/-1}
+ .controls-demo .simulation-stage{position:sticky;top:0;z-index:6;height:320px;min-height:320px!important}
+ .controls-demo .control-demo-footer{position:fixed;z-index:8;left:0;right:0;bottom:0;padding:10px 18px 12px;background:var(--paper);border-top:1px solid var(--line);box-shadow:0 -6px 20px #143f4410}
+ .controls-demo .control-demo-footer .control-demo-navigation{margin-top:0}
+ .controls-demo .control-demo-footer .control-demo-try{min-height:32px;margin-top:3px;padding:6px}
+ .controls-demo #app{padding-bottom:114px}
+ .controls-demo .coach-heading{padding-bottom:8px}
+}
+/* The scope workspace uses the coach for workflow at every width. */
+.operating .rail{display:none}
+@media(min-width:551px) and (max-width:1000px){
+ .controls-demo .simulation-stage{height:min(54dvh,550px);min-height:min(54dvh,550px)!important}
+}
