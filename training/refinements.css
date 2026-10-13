@@ -120,3 +120,8 @@ dialog.library-modal #modal-body{height:100%;min-height:0}
  .controls-demo #app{padding-bottom:114px}
  .controls-demo .coach-heading{padding-bottom:8px}
 }
+/* The scope workspace uses the coach for workflow at every width. */
+.operating .rail{display:none}
+@media(min-width:551px) and (max-width:1000px){
+ .controls-demo .simulation-stage{height:min(54dvh,550px);min-height:min(54dvh,550px)!important}
+}
