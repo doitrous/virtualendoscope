@@ -8,10 +8,16 @@
   "bugs": "https://github.com/doitrous/virtualendoscope/issues",
   "type": "module",
   "scripts": {
-    "start": "node prototypes/upper-gi-mesh/preview.mjs",
-    "test": "node --test prototypes/upper-gi-mesh/anatomy.test.mjs prototypes/upper-gi-mesh/disease.test.mjs prototypes/upper-gi-mesh/guided-track.test.mjs prototypes/upper-gi-mesh/mesh-assets.test.mjs prototypes/upper-gi-mesh/scope-physics.test.mjs prototypes/upper-gi-mesh/tissue.test.mjs prototypes/upper-gi-mesh/walkthrough.test.mjs"
+    "start": "node scripts/serve-training.mjs",
+    "start:prototype": "node prototypes/upper-gi-mesh/preview.mjs",
+    "build": "node scripts/build-training.mjs",
+    "preview": "node scripts/serve-training.mjs --dist",
+    "test": "node --test prototypes/upper-gi-mesh/*.test.mjs scripts/*.test.mjs training/*.test.mjs",
+    "prepare:training": "node training/prepare-assets.mjs"
   },
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "three": "0.159.0",
     "@fontsource-variable/figtree": "5.3.0"

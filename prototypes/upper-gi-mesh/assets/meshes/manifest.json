@@ -102,5 +102,13 @@
   "papilla": {
     "main": "papilla.main.37caa9696b3c.bin",
     "map": "papilla.map.b498d2d784fd.bin"
+  },
+  "barrett": {
+    "main": "barrett.training.main.bin",
+    "map": "barrett.training.map.bin"
+  },
+  "gastric-ulcer": {
+    "main": "gastric-ulcer.training.main.bin",
+    "map": "gastric-ulcer.training.map.bin"
   }
 }
