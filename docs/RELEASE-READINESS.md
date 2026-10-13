@@ -29,7 +29,7 @@ Checked entries record actual development verification. Unchecked items remain i
 - [ ] Keyboard, visible controls, narrow layouts, reduced motion and WebGL failure behavior reviewed.
 - [x] Atlas source/attribution and license labels inspected in the browser; original files and checksums recorded in the media ledger. Synthetic session images remain separate.
 - [ ] Original laboratory regression checked on its separate server.
-- [ ] Intended host configured for root paths, build output, port/health check; deployed URL checked after publication.
+- [x] Private Site deployment reported **succeeded** on 2026-10-13. Static root-path bundle packaged from Site source commit `1cf227ceb27c9c04dd98a113937443c5bdfeabc3`; native deployment verification returned a live URL. The existing owner-only audience was preserved.
 
 ## Independent validation still pending
 
