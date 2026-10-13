@@ -5,7 +5,7 @@ export function createTrainingPathology(id = 'normal') {
   const base = createDiseaseModel(['barrett','gastric-ulcer'].includes(id) ? ['normal'] : [id]);
   const centre = wallPoint([1.1, -2.4, 0], 1.05);
   const smooth = (a,b,x) => { const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t); };
-  return { ...base, ids:[id],
+  return { ...base, ids:[id], centre,
     field(x,y,z) {
       const d=base.field(x,y,z);
       if(id!=='gastric-ulcer') return d;

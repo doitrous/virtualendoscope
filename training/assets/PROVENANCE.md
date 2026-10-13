@@ -16,6 +16,7 @@ Actual uses verified on 2026-10-13:
 | `endoscopy-suite.png` | Welcome-screen background in `training/styles.css`. |
 | `gastroscope-control.png` | Scope-function preparation checkpoint in `training/app.mjs`. |
 | `scope-handpiece.png` | Live controller illustration and interactive instrument guide in `training/app.mjs`. |
+| `gastric-mucosa-v2.png` | Generated diffuse detail for the live tissue material; exact prompt and limits in [MUCOSA-VISUAL-PROVENANCE.md](../../docs/MUCOSA-VISUAL-PROVENANCE.md). |
 | `room-reference.png` | Unused design reference; no runtime reference was found in the current training source. |
 
 These images are synthetic art direction for the training application's visual environment. They are not clinical reference photographs, validated medical equipment models, validated anatomy, or evidence of a compliant clinical facility. Rendered device geometry, valve placement, tube details, display content and room arrangement may depart from real equipment and clinical practice. Educational controls and procedures must be grounded in reviewed clinical sources independently of these images.

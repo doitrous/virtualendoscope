@@ -14,6 +14,7 @@ This is an **unvalidated educational prototype**. Navigation follows a prescribe
 - Read source-linked lessons on indications, anatomy, instruments, optics, preparation, safety, examination and aftercare.
 - Select normal anatomy, reflux esophagitis, suspected Barrett's mucosa, gastric ulcer, duodenal ulcer, esophageal varices or suspected celiac disease.
 - Review the fictional patient and complete preparation before entering the examination.
+- Watch the six-step controls demo in a fixed stomach view, then try angulation, shaft rotation and centering. Replay it from the scope workspace without changing the case record.
 - Operate scope controls, inspect regions and label captured views; follow case-specific sampling rules and separate-container requirements.
 - Withdraw, complete handover and recovery, then download an illustrated HTML report or JSON session record.
 
@@ -82,6 +83,8 @@ Serving build output is a deployment mechanism, not evidence of clinical, securi
 - [Clinical sources and audit](docs/CLINICAL-SOURCES.md)
 - [Atlas licenses and limitations](docs/CLINICAL-MEDIA.md)
 - [Generated visual provenance](docs/VISUAL-PROVENANCE.md)
+- [Gastric realism reference review](docs/VISUAL-REALISM-REVIEW.md)
+- [Mucosal material provenance](docs/MUCOSA-VISUAL-PROVENANCE.md)
 - [Original laboratory notes](prototypes/upper-gi-mesh/README.md)
 
 ## License and contribution

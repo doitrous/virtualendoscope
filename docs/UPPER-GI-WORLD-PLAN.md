@@ -50,3 +50,13 @@ Automated and browser verification is being completed separately. This plan does
 ## Release boundary
 
 This is an upper GI educational vertical slice. Oral/pharyngeal intubation geometry, calibrated haptics/shaft mechanics, lower GI practical training, live instruction and clinical qualification assessment are absent. Independent expert review, student/user testing, accessibility and broad device/performance evaluation, and evidence of learning benefit remain pending. Appearance and software checks cannot establish clinical production readiness.
+
+## Follow-up plan: controls demonstration and tissue realism
+
+The user rejected the smooth artificial tissue appearance and requested an introductory demonstration of tip angulation, shaft rotation and centering. Before implementation, the follow-up is organized as follows:
+
+1. Review primary clinical/device references for regional folds, mucosal detail, illumination and control behavior; record corrections in `VISUAL-REALISM-REVIEW.md`.
+2. Add a six-step demonstration using the actual scope renderer in a fixed normal-stomach view. Show individual controls, moving degree readouts and the corresponding endoscopic image, then allow free practice. Offer it before the first insertion and from the welcome/help screens. Keep demonstration time, location and actions separate from the saved clinical case.
+3. Generate a synthetic normal-mucosa material reference with the built-in image tool. Apply it with low-contrast regional color, fine surface relief and local wet reflections; correct normals as the tissue deforms. Refine the gastric surface where evidence supports it, and remove coarse polygonal lesion color boundaries.
+4. Verify demo isolation, interrupted loads, replay/skip, reduced motion and restoration. Inspect the actual rendered result at multiple control positions and viewport sizes. Run relevant safety regression tests and the production build.
+5. Update the existing branch, draft PR and private preview with the verified result. Record residual realism and clinical-validation limits rather than equating visual polish with clinical accuracy.

@@ -4,6 +4,7 @@ import {deformPoint, deformation, antralScale, collapseScale, updateFluids} from
 import {createFluidEffects, createOptics} from '../prototypes/upper-gi-mesh/optics.mjs';
 import {createTrainingPathology} from './pathology.mjs';
 import {createSyntheticTissue} from './synthetic-tissue.mjs';
+import {refineGastricSurface} from './anatomy-surface.mjs';
 import {normalizeScopeSnapshot,scopeAngle,scopeKeyAllowed,scopeAdvanceBlocked,scopeControlCodes,scopeToolStages} from './endoscope-state.mjs';
 
 export const routeStops=[
@@ -22,18 +23,20 @@ export async function createEndoscope({container,onTelemetry=()=>{},onError=()=>
   renderer.domElement.tabIndex=0;renderer.domElement.setAttribute('aria-label','Interactive endoscopic view. Drag to angle the tip. W and S advance and withdraw; Q and E rotate.');
   container.prepend(renderer.domElement);
   const scene=new T.Scene(),camera=new T.PerspectiveCamera(110,1,.025,35);scene.add(camera);
-  camera.add(new T.PointLight('#fff3ed',5.8,14,1.6));
-  const fill=new T.PointLight('#ffe7dd',1.1,8,1.7);fill.position.set(-.09,-.03,0);camera.add(fill);
+  const keyLight=new T.PointLight('#fff7f2',4.6,14,1.7);keyLight.position.set(.055,.025,-.015);camera.add(keyLight);
+  const fill=new T.PointLight('#fff0e6',.85,8,1.7);fill.position.set(-.065,-.025,0);camera.add(fill);
   scene.add(new T.AmbientLight('#c9a69b',.025));
   const sim={time:0,gas:.36,fluid:.08,lens:0};
-  const uniforms={simTime:{value:0},gas:{value:sim.gas}};
-  const material=createSyntheticTissue(uniforms);
+  const uniforms={simTime:{value:0},gas:{value:sim.gas},pathologyKind:{value:0},ulcerCentre:{value:new T.Vector3()}};
+  let material;
+  try { material=await createSyntheticTissue(uniforms); }
+  catch(error){renderer.dispose();renderer.domElement.remove();throw new Error('The tissue material could not be loaded. Retry the endoscopic view.');}
   let store,organ,pathology=createTrainingPathology(),loadToken=0,disposed=false,contextLost=false;
   const curve=new T.CatmullRomCurve3(routeStops.map(s=>new T.Vector3(...s.p)),false,'centripetal');curve.arcLengthDivisions=1800;
   const length=curve.getLength();
   const locations=routeStops.map(s=>{let best=0,d=Infinity;for(let i=0;i<=1600;i++){const n=curve.getPointAt(i/1600).distanceToSquared(new T.Vector3(...s.p));if(n<d){best=i/1600;d=n;}}return best;});
   let progress=0,yaw=0,pitch=0,roll=0,retroflex=false,enabled=false,dwell=0,previousRegion='entry',telemetry={},hudClock=0;
-  let drag=null,qualityValue=quality,reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let drag=null,orientationOnly=false,qualityValue=quality,reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const keys=new Set(),held=new Set();
   const optics=createOptics(renderer,scene,camera),fluids=createFluidEffects(scene,camera);
   const scopeMaterial=new T.MeshPhysicalMaterial({color:'#263b3e',roughness:.26,clearcoat:.7});
@@ -68,8 +71,12 @@ export async function createEndoscope({container,onTelemetry=()=>{},onError=()=>
     const token=++loadToken;enabled=false;clearInput();
     const meshes=await store.get(ids);
     if(disposed||token!==loadToken)return false;
+    if(contextLost)throw new Error('The graphics context was interrupted while loading. Retry the endoscopic view.');
     store.activate(meshes);pathology=createTrainingPathology(ids[0]);
-    if(organ)organ.geometry=meshes.main;else {organ=new T.Mesh(meshes.main,material);scene.add(organ);}
+    uniforms.pathologyKind.value=ids[0]==='barrett'?1:ids[0]==='gastric-ulcer'?2:0;
+    uniforms.ulcerCentre.value.set(...pathology.centre);
+    const visualGeometry=refineGastricSurface(meshes.main,{enabled:true});
+    if(organ){organ.geometry.dispose();organ.geometry=visualGeometry;}else {organ=new T.Mesh(visualGeometry,material);scene.add(organ);}
     reset();return true;
   }
   function reset(){enabled=false;progress=yaw=pitch=roll=0;retroflex=false;dwell=0;toolStage='idle';sim.gas=.36;sim.fluid=.08;sim.lens=0;sim.time=0;clearInput();hudClock=.11;update(0);}
@@ -88,15 +95,15 @@ export async function createEndoscope({container,onTelemetry=()=>{},onError=()=>
     dt=Math.min(.04,Math.max(0,dt));const moving=enabled;
     const key=code=>moving&&(keys.has(code)||held.has(code));
     let drive=(key('KeyW')?1:0)-(key('KeyS')?1:0);
-    if(toolStage!=='idle'||retroflex)drive=0;
+    if(toolStage!=='idle'||retroflex||orientationOnly)drive=0;
     const steerX=(key('ArrowLeft')||key('KeyA')?1:0)-(key('ArrowRight')||key('KeyD')?1:0);
     const steerY=(key('ArrowUp')?1:0)-(key('ArrowDown')?1:0);
     const rotating=key('KeyQ')||key('KeyE');
     if(rotating||steerX||steerY)dwell=0;
     yaw=T.MathUtils.clamp(yaw+steerX*dt*.72,-1.5,1.5);pitch=T.MathUtils.clamp(pitch+steerY*dt*.72,-1.5,1.5);
     roll=scopeAngle('roll',roll+(Number(key('KeyQ'))-Number(key('KeyE')))*dt*.8);
-    const input={air:+key('KeyI'),water:+key('KeyJ'),suction:+key('KeyK'),wash:+key('KeyL')};
-    if(moving){updateFluids(sim,dt,input);if(!reducedMotion)sim.time=Math.min(86400,sim.time+dt);}
+    const input={air:+(!orientationOnly&&key('KeyI')),water:+(!orientationOnly&&key('KeyJ')),suction:+(!orientationOnly&&key('KeyK')),wash:+(!orientationOnly&&key('KeyL'))};
+    if(moving&&!orientationOnly){updateFluids(sim,dt,input);if(!reducedMotion)sim.time=Math.min(86400,sim.time+dt);}
     let pose=viewPose(progress),contact=false;
     if(drive){
       const next=T.MathUtils.clamp(progress+drive*dt*.037,0,1),candidate=viewPose(next);
@@ -121,7 +128,7 @@ export async function createEndoscope({container,onTelemetry=()=>{},onError=()=>
     hudClock+=dt;if(hudClock>.1){hudClock=0;onTelemetry({...telemetry});}
   }
   function setRetroflex(value){
-    if(!enabled)return {ok:false,message:'Resume the active examination before changing the viewing configuration.'};
+    if(!enabled||orientationOnly)return {ok:false,message:'Resume the active examination before changing the viewing configuration.'};
     if(typeof value!=='boolean')return {ok:false,message:'Choose a valid viewing configuration.'};
     if(value && !['body','antrum'].includes(regionAt()))return {ok:false,message:'Retroflex only within the stomach after establishing adequate space.'};
     if(toolStage!=='idle')return {ok:false,message:'Withdraw accessories before changing the viewing configuration.'};
@@ -131,10 +138,12 @@ export async function createEndoscope({container,onTelemetry=()=>{},onError=()=>
     if(disposed)return;
     disposed=true;clearInput();observer.disconnect();window.removeEventListener('keydown',keydown);window.removeEventListener('keyup',keyup);window.removeEventListener('blur',clearInput);document.removeEventListener('visibilitychange',clearInput);
     canvas.removeEventListener('pointerdown',pointerdown);canvas.removeEventListener('pointermove',pointermove);canvas.removeEventListener('pointerup',pointerup);canvas.removeEventListener('pointercancel',pointerup);canvas.removeEventListener('lostpointercapture',pointerup);canvas.removeEventListener('webglcontextlost',lost);
-    const geometries=new Set(),materials=new Set();scene.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material)materials.add(o.material);});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());
+    const geometries=new Set(),materials=new Set([material]);scene.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material)materials.add(o.material);});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());
     if(store)for(const item of store.cache.values()){item.main.dispose();item.map.dispose();}optics.dispose();renderer.dispose();canvas.remove();
   }
   return {canvas,loadCase,update,reset,dispose,setRetroflex,getTelemetry:()=>({...telemetry}),
+    setOrientationOnly(value){orientationOnly=!!value;clearInput();dwell=0;},
+    setDemonstrationPose(pose){if(!orientationOnly||disposed||contextLost)return;for(const axis of ['pitch','yaw','roll'])if(scopeAngle(axis,pose?.[axis])===null)return;pitch=scopeAngle('pitch',pose.pitch);yaw=scopeAngle('yaw',pose.yaw);roll=scopeAngle('roll',pose.roll);dwell=0;},
     setEnabled(value){enabled=!!value&&!disposed&&!contextLost;if(!enabled)clearInput();},
     setHeld(code,value){if(!scopeControlCodes.includes(code))return;if(value===true&&enabled)held.add(code);else held.delete(code);},
     setAngle(axis,value){if(!enabled)return;const angle=scopeAngle(axis,value);if(angle===null)return;if(axis==='yaw')yaw=angle;if(axis==='pitch')pitch=angle;if(axis==='roll')roll=angle;dwell=0;},

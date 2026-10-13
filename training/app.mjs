@@ -4,6 +4,8 @@ import {createSession,transition,assess,restoreSession,exportReport,REGIONS,REGI
 import {createWorld} from './world.mjs';
 import {createEndoscope} from './endoscope.mjs';
 import {mountLearning} from './learning.mjs';
+import {mountControlDemo,demoPose} from './control-demo.mjs';
+import {DEMO_CHECKPOINT,demoCanStart,demoReturnState,caseCheckpoint,demoBlocksAction} from './demo-lifecycle.mjs';
 import {savePhoto,loadPhotos,retainSessionPhotos} from './storage.mjs';
 import {clinicalAtlas} from './content/clinical-atlas.mjs';
 import {buildReportHTML} from './report.mjs';
@@ -18,6 +20,7 @@ let learningStudio=null,lastPanelKey='',inspectorPart='wheels';
 let session=null,world=null,scope=null,room='theory',view='world',selectedCase=cases[0].id,loadingScope=false,scopeReady=false;
 let telemetry={region:'entry',progress:0,visibility:1,dwell:0,gas:.36,fluid:.08,contact:false,retroflex:false};
 let scopeInit=null,scopeLoadGeneration=0;
+let controlDemo=null;
 let sessionGeneration=0,photosLoading=false,pendingScopeCheckpoint=null,pendingScopeSessionId=null;
 let saved=null,completedLessons={},activeLesson=lessons[0].id,activeTab='mission',showIntro=true,muted=true,audioContext=null;
 let currentPrep=null,photoData=new Map(),lastSave=0,lastTick=0,lastFrame=performance.now(),raf=0,roomPos={room:'theory',x:-8,z:3,heading:0};
@@ -45,14 +48,14 @@ document.querySelector('#app').innerHTML=`
         <div class="patient-strip"><span class="patient-label">SIMULATED OBSERVATIONS</span><div><small>SpO₂</small><strong id="spo2">98<span>%</span></strong></div><div><small>HR</small><strong>72<span>/min</span></strong></div><div><small>BP</small><strong>122/76<span>mmHg</span></strong></div><div><small>Resp.</small><strong>14<span>/min</span></strong></div><svg class="ecg" viewBox="0 0 170 36" aria-hidden="true"><path d="M0 20H23l5-5 5 5h17l6-14 6 25 6-11h28l5-5 5 5h20l6-14 6 25 6-11h26"/></svg><button data-action="drill" class="small-link">Safety drill ${icon('arrow')}</button></div>
       </section>
       <div class="stage-error" id="stage-error" hidden></div>
-      <section class="welcome" id="welcome"><div class="welcome-image"></div><div class="welcome-shade"></div><div class="welcome-content"><span class="eyebrow">A NEW PERSPECTIVE ON PROCEDURAL LEARNING</span><h1>Step into<br>your next<br><em>procedure.</em></h1><p>Prepare with purpose. Explore the upper GI tract.<br>Build a thoughtful, systematic examination.</p><button class="primary" data-action="cases">Begin an upper endoscopy <span>→</span></button>${saved?'<button class="resume-button" data-action="resume">Resume your saved session →</button>':''}<div class="welcome-meta"><span>3 connected spaces</span><span>7 clinical scenarios</span><span>16 learning modules</span></div><small class="welcome-notice">Educational simulation · Fictional patients · Expert validation pending</small></div><span class="image-credit">Synthetic environment concept</span></section>
+      <section class="welcome" id="welcome"><div class="welcome-image"></div><div class="welcome-shade"></div><div class="welcome-content"><span class="eyebrow">A NEW PERSPECTIVE ON PROCEDURAL LEARNING</span><h1>Step into<br>your next<br><em>procedure.</em></h1><p>Prepare with purpose. Explore the upper GI tract.<br>Build a thoughtful, systematic examination.</p><button class="primary" data-action="cases">Begin an upper endoscopy <span>→</span></button><button class="resume-button" data-action="control-demo">Explore the scope controls →</button>${saved?'<button class="resume-button" data-action="resume">Resume your saved session →</button>':''}<div class="welcome-meta"><span>3 connected spaces</span><span>7 clinical scenarios</span><span>16 learning modules</span></div><small class="welcome-notice">Educational simulation · Fictional patients · Expert validation pending</small></div><span class="image-credit">Synthetic environment concept</span></section>
     </section>
     <aside class="coach"><div class="coach-heading"><span class="eyebrow">YOUR CLINICAL COMPANION</span><span class="coach-symbol">✧</span></div><nav class="coach-tabs" aria-label="Session panels"><button data-tab="mission" class="active">Workflow</button><button data-tab="findings">Findings</button><button data-tab="log">Record</button></nav><div id="coach-body"></div></aside>
   </main>
   <section class="operator-console" id="operator-console" hidden aria-label="Endoscope controls">
-    <div class="controller-visual" title="Generic illustrated control head"><img class="real-handpiece" src="/training/assets/scope-handpiece.png" alt="Synthetic gloved left hand holding a generic gastroscope control head"><div class="glove glove-one"></div><div class="glove glove-two"></div><div class="scope-handle"><span class="handle-valve red"></span><span class="handle-valve blue"></span><div class="handle-wheel" id="handle-wheel"><i></i></div><div class="handle-smallwheel" id="handle-smallwheel"></div><div class="handle-port"></div></div><div class="scope-cable"></div><span>CONTROL HEAD <small>Generic training interface</small></span></div>
+    <div class="controller-visual" title="Generic illustrated control head"><img class="real-handpiece" src="/training/assets/scope-handpiece.png" alt="Synthetic gloved left hand holding a generic gastroscope control head"><div class="demo-wheel-cue" aria-hidden="true"><i id="demo-wheel-pitch"></i><i id="demo-wheel-yaw"></i></div><div class="glove glove-one"></div><div class="glove glove-two"></div><div class="scope-handle"><span class="handle-valve red"></span><span class="handle-valve blue"></span><div class="handle-wheel" id="handle-wheel"><i></i></div><div class="handle-smallwheel" id="handle-smallwheel"></div><div class="handle-port"></div></div><div class="scope-cable"></div><span>CONTROL HEAD <small>Generic training interface</small></span></div>
     <div class="angle-controls"><div class="console-title">Tip angulation <button class="small-link" data-action="centre">Centre controls</button></div><label><span>Up / down</span><input id="pitch" aria-label="Up down angulation" type="range" min="-1.5" max="1.5" step=".01" value="0"><output id="pitch-value">0°</output></label><label><span>Left / right</span><input id="yaw" aria-label="Left right angulation" type="range" min="-1.5" max="1.5" step=".01" value="0"><output id="yaw-value">0°</output></label><label><span>Shaft rotation</span><input id="roll" aria-label="Shaft rotation" type="range" min="-3.14" max="3.14" step=".01" value="0"><output id="roll-value">0°</output></label></div>
-    <div class="insertion-controls"><div class="console-title">Insertion & inspection</div><div class="advance-buttons"><button data-hold="KeyS"><kbd>S</kbd> Withdraw</button><button data-hold="KeyW"><kbd>W</kbd> Advance</button></div><div class="secondary-controls"><button data-action="retroflex" id="retroflex-button" aria-pressed="false">Retroflex view</button><button data-action="photo">${icon('photo')} Capture</button></div><button class="text-button" data-action="observe">Document current region <span>→</span></button></div>
+    <div class="insertion-controls"><div class="console-title">Insertion & inspection <button class="small-link" data-action="control-demo">Controls demo ↗</button></div><div class="advance-buttons"><button data-hold="KeyS"><kbd>S</kbd> Withdraw</button><button data-hold="KeyW"><kbd>W</kbd> Advance</button></div><div class="secondary-controls"><button data-action="retroflex" id="retroflex-button" aria-pressed="false">Retroflex view</button><button data-action="photo">${icon('photo')} Capture</button></div><button class="text-button" data-action="observe">Document current region <span>→</span></button></div>
     <div class="fluid-controls"><div class="console-title">Air · water · suction</div><div class="fluid-buttons"><button data-hold="KeyI"><span>I</span>Insufflate</button><button data-hold="KeyJ"><span>J</span>Irrigate</button><button data-hold="KeyK"><span>K</span>Suction</button><button data-hold="KeyL"><span>L</span>Lens wash</button></div><div class="fluid-meters"><label>Distension <meter id="gas-meter" min="0" max="1" value=".36"></meter></label><label>Fluid <meter id="fluid-meter" min="0" max="1" value=".08"></meter></label></div></div>
   </section>
   <footer class="app-footer"><span>UPPER GI · SUPERVISED LEARNING</span><span>Illustrative anatomy & controls · No competence certification</span><button data-action="sources">Evidence & credits ${icon('arrow')}</button></footer>
@@ -62,18 +65,34 @@ document.querySelector('#app').innerHTML=`
 function toast(message,error=false){const el=$('#toast');el.textContent=message;el.classList.toggle('error',error);el.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('show'),5000);}
 function persist(){
  if(!session)return;
- const checkpoint=scopeReady?scope?.snapshot():pendingScopeSessionId===session.id?pendingScopeCheckpoint:null;
+ const checkpoint=caseCheckpoint({demo:controlDemo,scopeReady,scopeSnapshot:scope?.snapshot(),pendingScopeCheckpoint,pendingScopeSessionId,sessionId:session.id});
  saved=savedCheckpoint(session,checkpoint);
  if(!$('#welcome [data-action="resume"]')){const resume=document.createElement('button');resume.className='resume-button';resume.dataset.action='resume';resume.textContent='Resume your saved session →';$('#welcome .welcome-meta').before(resume);}
  try{localStorage.setItem('lumen.training.v1',JSON.stringify(saved));}catch{ $('.local-note').textContent='Saving unavailable in this browser';}
 }
-function dispatch(action,quiet=false){if(!session)return {ok:false};if(needsLiveView(action)&&(!scopeReady||photosLoading||view!=='scope'||showIntro||$('#modal').open)){const message='Return to a ready endoscopic view before continuing the examination.';if(!quiet)toast(message,true);return {ok:false,message,session};}const r=transition(session,{...action,telemetry:action.telemetry||telemetry},config);if(!r.ok){if(!quiet)toast(r.message,true);return r;}session=r.session;if(action.type!=='TICK'){persist();render();}return r;}
+function dispatch(action,quiet=false){if(!session)return {ok:false};if(controlDemo&&demoBlocksAction(action))return {ok:false,message:'Finish controls practice before returning to the case.',session};if(needsLiveView(action)&&(!scopeReady||photosLoading||view!=='scope'||showIntro||$('#modal').open)){const message='Return to a ready endoscopic view before continuing the examination.';if(!quiet)toast(message,true);return {ok:false,message,session};}const r=transition(session,{...action,telemetry:action.telemetry||telemetry},config);if(!r.ok){if(!quiet)toast(r.message,true);return r;}session=r.session;if(action.type!=='TICK'){persist();render();}return r;}
 const currentCase=()=>cases.find(c=>c.id===(session?.caseId||selectedCase))||cases[0];
 function hideWelcome(){showIntro=false;$('#welcome').hidden=true;}
 function openModal(html,kicker='LUMEN ACADEMY',wide=false){learningStudio?.destroy();learningStudio=null;$('#modal').classList.remove('library-modal');scope?.setEnabled(false);world?.setProcedureActive(true);$('#modal-body').innerHTML=html;$('#modal-kicker').textContent=kicker;$('#modal').classList.toggle('wide',wide);if(!$('#modal').open)$('#modal').showModal();}
 function closeModal(){$('#modal').close();syncControls();}
 $('#modal').addEventListener('close',()=>{learningStudio?.destroy();learningStudio=null;$('#modal').classList.remove('library-modal');syncControls();});
-function syncControls(){const operating=view==='scope'&&!showIntro&&session?.phase==='procedure'&&!session.paused&&!session.emergency&&!$('#modal').open&&scopeReady&&!photosLoading;scope?.setEnabled(operating);scope?.setTool(session?.biopsy.stage||'idle');world?.setProcedureActive(showIntro||view==='scope'||$('#modal').open);document.querySelectorAll('[data-hold],#pitch,#yaw,#roll,#retroflex-button,[data-action=centre],[data-action=observe],[data-action=photo],[data-finding],[data-biopsy],[data-sample-step]').forEach(b=>b.disabled=!operating);document.querySelectorAll('[data-hold]').forEach(b=>{if(!operating)b.classList.remove('held');});document.querySelectorAll('[data-action="export"],[data-action="export-json"],[data-action="gallery"]').forEach(button=>button.disabled=photosLoading);}
+function syncControls(){
+ const demoState=controlDemo?.state;
+ const practicing=!!controlDemo&&!controlDemo.returning&&demoState?.practicing&&!demoState.paused&&scopeReady&&!loadingScope&&!$('#modal').open;
+ const operating=!controlDemo&&view==='scope'&&!showIntro&&session?.phase==='procedure'&&!session.paused&&!session.emergency&&!$('#modal').open&&scopeReady&&!photosLoading;
+ scope?.setEnabled(operating||practicing);scope?.setTool(controlDemo?'idle':session?.biopsy.stage||'idle');
+ world?.setProcedureActive(showIntro||view==='scope'||$('#modal').open);
+ document.querySelectorAll('[data-hold],#pitch,#yaw,#roll,#retroflex-button,[data-action=centre],[data-action=observe],[data-action=photo],[data-finding],[data-biopsy],[data-sample-step]').forEach(b=>b.disabled=!operating);
+ if(practicing)document.querySelectorAll('#pitch,#yaw,#roll,[data-action=centre]').forEach(b=>b.disabled=false);
+ document.querySelectorAll('[data-hold]').forEach(b=>{if(!operating)b.classList.remove('held');});
+ document.querySelectorAll('[data-demo-locked]').forEach(b=>{b.disabled=b.dataset.demoLocked==='true';delete b.dataset.demoLocked;});
+ if(controlDemo)document.querySelectorAll('[data-room],[data-station],[data-map-room],[data-phase],[data-tab],[data-action=home],[data-action=cases],[data-action=control-demo],[data-action=help],[data-action=settings],[data-action=room-view],[data-action=drill],[data-action=atlas],[data-action=curriculum],[data-action=instrument]').forEach(b=>{b.dataset.demoLocked=String(b.disabled);b.disabled=true;});
+ document.querySelectorAll('[data-action="export"],[data-action="export-json"],[data-action="gallery"]').forEach(b=>b.disabled=photosLoading||!!controlDemo);
+ const selected=demoState?.stepId;
+ for(const axis of ['pitch','yaw','roll'])$('#'+axis).closest('label').classList.toggle('demo-active-control',!!controlDemo&&(selected===axis||demoState?.practicing));
+ document.querySelector('[data-action=centre]').classList.toggle('demo-active-control',!!controlDemo&&selected==='centre');
+}
+
 function setRoom(id){room=id;hideWelcome();view='world';$('#scope-stage').hidden=true;$('#operator-console').hidden=true;document.body.classList.remove('operating');world?.setRoom(id);renderRooms();syncControls();if(id==='theory'&&session?.phase!=='procedure')activeTab='mission';renderPanel();}
 function renderRooms(){const names={theory:['The theory room','Understand the instrument. Prepare for the procedure.'],procedure:['The procedure room','A systematic examination begins before insertion.'],recovery:['Recovery & reflection','Close the loop. Handover, observe and reflect.']};$('#room-title').textContent=names[room][0];$('#room-subtitle').textContent=names[room][1];document.querySelectorAll('[data-room]').forEach(b=>b.classList.toggle('active',b.dataset.room===room));document.querySelectorAll('[data-map-room]').forEach(b=>b.classList.toggle('active',b.dataset.mapRoom===roomPos.room));$('.world-header').hidden=view==='scope';$('.world-footer').hidden=view==='scope';$('.world-actions').hidden=view==='scope';$('.touch-walk').hidden=view==='scope';}
 
@@ -89,6 +108,7 @@ function render(){
 
 function sourceLinks(ids){return `<div class="source-links">${ids.map(id=>sources.find(s=>s.id===id)).filter(Boolean).map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.organization||s.title)}${s.year?' · '+s.year:''} ↗</a>`).join('')}</div>`;}
 function renderPanel(){
+  if(controlDemo)return;
   const el=$('#coach-body'),c=currentCase();const panelKey=[session?.phase,activeTab,Boolean(session?.emergency)].join(':');if(panelKey!==lastPanelKey){el.scrollTop=0;lastPanelKey=panelKey;}
   if(!session){el.innerHTML=`<div class="panel-intro"><span class="line-icon">✧</span><h2>Practice with purpose.</h2><p>Move through a complete diagnostic upper-endoscopy session, from your first patient check to your final handover.</p><button class="primary" data-action="cases">Choose a scenario →</button></div><div class="small-feature"><span>01</span><div><b>Prepare thoughtfully</b><p>Patient, team and equipment.</p></div></div><div class="small-feature"><span>02</span><div><b>See the whole picture</b><p>Inspect, document and sample appropriately.</p></div></div><div class="small-feature"><span>03</span><div><b>Learn from the session</b><p>Review coverage and decisions.</p></div></div><p class="fineprint">The procedure is a route-assisted, synthetic training model. Lower-GI indications are taught in the library; lower-GI procedural training is not yet included.</p>`;return;}
   if(activeTab==='log'&&!session.emergency){renderRecord(el);return;}
@@ -150,7 +170,7 @@ function showScopeError(message){
 function enterScope(){hideWelcome();room='procedure';view='scope';$('#scope-stage').hidden=false;$('#operator-console').hidden=false;document.body.classList.add('operating');world?.setRoom('procedure');world?.focusStation('patient');renderRooms();renderPanel();syncControls();}
 function updateTelemetry(t){
   const regionChanged=telemetry.region!==t.region;telemetry=t;
-  $('#scope-region').textContent=REGION_NAMES[t.region];$('#scope-position').textContent=t.progress<.012?'AT ENTRY':`ILLUSTRATIVE ROUTE · ${Math.round(t.progress*100)}%`;
+  $('#scope-region').textContent=controlDemo?'Stomach · controls practice':REGION_NAMES[t.region];$('#scope-position').textContent=t.progress<.012?'AT ENTRY':`ILLUSTRATIVE ROUTE · ${Math.round(t.progress*100)}%`;
   $('#scope-state').textContent=session?.paused?'PROCEDURE PAUSED':t.contact?'STOP · REORIENT TIP':t.retroflex?'GASTRIC RETROFLEX VIEW':'DIRECT-VISION INSPECTION';
   $('#scope-timer').textContent=formatTime(session?.procedureSeconds||0);$('#visibility-label').textContent=t.visibility>.7?'Clear view':t.visibility>.5?'Improve visibility':'View obscured';
   $('#gas-meter').value=t.gas;$('#fluid-meter').value=t.fluid;$('#handle-wheel').style.transform=`rotate(${-t.pitch*100}deg)`;$('#handle-smallwheel').style.transform=`rotate(${-t.yaw*100}deg)`;
@@ -160,7 +180,48 @@ function updateTelemetry(t){
   if($('#guidance-card'))$('#guidance-card').classList.toggle('warning',t.contact||t.visibility<.55);
   if($('#coach-region'))$('#coach-region').textContent=REGION_NAMES[t.region];
   document.querySelectorAll('[data-region]').forEach(el=>{el.classList.toggle('current',el.dataset.region===t.region);el.querySelector('b').textContent=el.dataset.region===t.region?'HERE':'';});
+  if(controlDemo){if(scopeReady&&!loadingScope&&!controlDemo.returning)controlDemo.lastPose={pitch:t.pitch,yaw:t.yaw,roll:t.roll};$('#scope-position').textContent='FIXED GASTRIC VIEW · NORMAL ANATOMY';$('#scope-state').textContent=controlDemo.state?.practicing?'YOUR TURN · ANGLE OR ROTATE':({pitch:'UP / DOWN · TIP ANGULATION',yaw:'LEFT / RIGHT · TIP ANGULATION',roll:'SHAFT ROTATION · VIEW ORIENTATION',centre:'RETURN TO NEUTRAL CONTROLS'}[controlDemo.state?.stepId]||'WATCH THE CONTROLS AND LIVE VIEW');$('#scope-timer').textContent='DEMO';controlDemo.controller?.updatePose?.(t);}
+  $('#demo-wheel-pitch').style.transform=`rotate(${-t.pitch*100}deg)`;$('#demo-wheel-yaw').style.transform=`rotate(${-t.yaw*100}deg)`;
   if(regionChanged&&$('#photo-landmark'))$('#photo-landmark').innerHTML=photoOptions();
+}
+function pauseControlDemo(){if(controlDemo?.state&&!controlDemo.state.paused&&!controlDemo.returning)controlDemo.controller?.toggleMotion();}
+async function beginControlDemo({startAfter=false}={}){
+ if(controlDemo)return;
+ if(!demoCanStart(session,{loading:loadingScope,photosLoading})){toast('Finish the active safety or specimen workflow and wait for loading before opening controls practice.',true);return;}
+ const checkpoint=scopeReady?scope?.snapshot():pendingScopeSessionId===session?.id?pendingScopeCheckpoint:null;
+ const returnState=demoReturnState({session,checkpoint,room,view,showIntro,startAfter});
+ if(session?.phase==='procedure')dispatch({type:'PAUSE',value:true},true);
+ const demo={returnState,controller:null,state:null,elapsed:0,returning:false};controlDemo=demo;
+ closeModal();document.body.classList.add('controls-demo');enterScope();
+ $('#coach-body').innerHTML='';
+ const onStep=(step,state)=>{if(controlDemo!==demo)return;demo.state=state;demo.elapsed=state.paused&&preferences.reducedMotion?1.3:0;if(!state.practicing){demo.lastPose=demoPose(step.id,demo.elapsed);scope?.setDemonstrationPose(demo.lastPose);}syncControls();};
+ demo.controller=mountControlDemo($('#coach-body'),{initialStep:'intro',initialPaused:preferences.reducedMotion,onStep,onFinish:()=>finishControlDemo(false),onSkip:()=>finishControlDemo(true),onMotionChange:state=>{demo.state=state;syncControls();}});
+ const ready=await prepareScope({meshCaseIds:['normal']},{checkpoint:DEMO_CHECKPOINT});
+ if(controlDemo!==demo)return;
+ if(ready){scope.setOrientationOnly(true);demo.elapsed=demo.state.paused&&preferences.reducedMotion?1.3:0;if(!demo.state.practicing)scope.setDemonstrationPose(demoPose(demo.state.stepId,demo.elapsed));syncControls();}
+}
+async function finishControlDemo(skipped){
+ const demo=controlDemo;if(!demo||demo.returning)return;
+ demo.returning=true;demo.controller?.destroy();scope?.setEnabled(false);scope?.setOrientationOnly(false);
+ $('#coach-body').innerHTML='<span class="eyebrow">CONTROLS PRACTICE COMPLETE</span><h2>Returning to your case.</h2><p>Your case position and record have been kept separately from this demonstration.</p>';
+ syncControls();
+ const restore=demo.returnState;
+ let ready=true;
+ if(session&&session.id===restore.sessionId)ready=await prepareScope(currentCase(),{checkpoint:restore.checkpoint});
+ else {++scopeLoadGeneration;scope?.reset();scopeReady=false;loadingScope=false;$('#scope-loading').hidden=true;}
+ if(controlDemo!==demo)return;
+ controlDemo=null;document.body.classList.remove('controls-demo');if(ready&&scopeReady)updateTelemetry(scope.getTelemetry());syncControls();
+ if(restore.startAfter&&ready&&session?.phase==='preparation'){
+   if(dispatch({type:'START'}).ok){enterScope();toast('Controls practice complete. Begin the case at the oesophagus.');}
+ }else{
+   setRoom(restore.room);
+   if(restore.view==='scope')enterScope();
+   if(restore.showIntro){showIntro=true;$('#welcome').hidden=false;scope?.setEnabled(false);world?.setProcedureActive(true);}
+   render();
+   if(!session&&!skipped)casesModal();
+   else if(session?.phase==='procedure')toast('Your case is restored and paused. Resume when ready.');
+ }
+ persist();lastTick=performance.now();
 }
 function formatTime(value){const n=Math.floor(value);return `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;}
 function patientModal(){const p=currentCase().patient;openModal(`<h2>${esc(p.name)}</h2><span class="pill">Fictional training patient</span><dl class="patient-details">${[['Age / sex',`${p.age} · ${p.sex}`],['Indication',p.indication],['History',p.history],['Medications',p.medications.join('; ')],['Allergies',p.allergies],['ASA teaching profile',p.asa],['Fasting',p.fasting],['Sedation plan',p.sedationPlan]].map(([a,b])=>`<div><dt>${esc(a)}</dt><dd>${esc(b)}</dd></div>`).join('')}</dl><p class="fineprint">ASA class is supplied as a teaching assumption and still requires clinical assessment.</p><button class="primary" data-action="close-modal">Return to the suite →</button>`,'PATIENT ASSESSMENT');}
@@ -223,6 +284,7 @@ document.addEventListener('click',async e=>{
   if(button.dataset.response){dispatch({type:'RESPOND',id:button.dataset.response});return;}
   if(button.dataset.sampleStep){const step=button.dataset.sampleStep,id=button.dataset.findingId;const r=dispatch({type:'BIOPSY',step,findingId:id,label:$('#specimen-label')?.value,site:$('#specimen-site')?.value});if(r.ok){scope?.setTool(session.biopsy.stage);if(['label','cancel'].includes(step)){toast(step==='label'?'Labeled specimen recorded.':'Accessory withdrawn.');render();}else biopsyModal(id);}return;}
   const action=button.dataset.action;
+  if(action==='control-demo'){closeModal();await beginControlDemo();return;}
   if(action==='home'){showIntro=true;$('#welcome').hidden=false;scope?.setEnabled(false);world?.setProcedureActive(true);return;}
   if(action==='cases'){casesModal();return;}
   if(action==='new-session'){await newSession();return;}
@@ -235,10 +297,10 @@ document.addEventListener('click',async e=>{
   if(['sources','limits'].includes(action)){sourcesModal();return;}
   if(action==='patient'){patientModal();return;}
   if(action==='brief'){if(dispatch({type:'BRIEF'}).ok)setRoom('procedure');return;}
-  if(action==='start'){if(!scopeReady){toast(loadingScope?'The model is still loading.':'Load the endoscopic model before starting.',true);if(!loadingScope)prepareScope(currentCase());return;}if(dispatch({type:'START'}).ok){enterScope();toast('Procedure started. Advance gently using W or the Advance control.');}return;}
+  if(action==='start'){if(!scopeReady){toast(loadingScope?'The model is still loading.':'Load the endoscopic model before starting.',true);if(!loadingScope)prepareScope(currentCase());return;}const check=transition(session,{type:'START'},config);if(!check.ok){toast(check.message,true);return;}await beginControlDemo({startAfter:true});return;}
   if(action==='scope-view'){enterScope();return;}
   if(action==='room-view'){setRoom('procedure');return;}
-  if(action==='retry-scope'){if(loadingScope)return;const checkpoint=pendingScopeSessionId===session?.id&&pendingScopeCheckpoint?pendingScopeCheckpoint:scope?.snapshot();scope?.dispose();scope=null;scopeInit=null;await prepareScope(currentCase(),{checkpoint});return;}
+  if(action==='retry-scope'){if(loadingScope)return;const lastDemoPose=controlDemo?.lastPose;const checkpoint=pendingScopeSessionId===session?.id&&pendingScopeCheckpoint?pendingScopeCheckpoint:scope?.snapshot();scope?.dispose();scope=null;scopeInit=null;const ready=await prepareScope(controlDemo&&!controlDemo.returning?{meshCaseIds:['normal']}:currentCase(),{checkpoint:controlDemo&&!controlDemo.returning?DEMO_CHECKPOINT:checkpoint});if(ready&&controlDemo&&!controlDemo.returning){scope.setOrientationOnly(true);controlDemo.elapsed=0;scope.setDemonstrationPose(lastDemoPose||demoPose(controlDemo.state?.stepId,preferences.reducedMotion?1.3:0));syncControls();}return;}
   if(action==='pause'){dispatch({type:'PAUSE',value:!session.paused});return;}
   if(action==='centre'){scope?.centre();return;}
   if(action==='retroflex'){const r=scope?.setRetroflex(!telemetry.retroflex);if(r&&!r.ok)toast(r.message,true);return;}
@@ -267,7 +329,7 @@ document.addEventListener('click',async e=>{
     if(!result.error)toast('Session restored. Resume when you are ready.');return;
   }
   if(action==='settings'){openModal(`<h2>Make the room yours.</h2><label class="field-label">Rendering quality<select id="quality-setting"><option value="low" ${preferences.quality==='low'?'selected':''}>Low · lighter on the device</option><option value="balanced" ${preferences.quality==='balanced'?'selected':''}>Balanced</option><option value="high" ${preferences.quality==='high'?'selected':''}>High</option></select></label><label class="toggle-row"><input id="motion-setting" type="checkbox" ${preferences.reducedMotion?'checked':''}> Reduce animated tissue motion</label><label class="toggle-row"><input id="sound-setting" type="checkbox" ${!muted?'checked':''}> Enable a subtle simulated monitor tone</label><p class="fineprint">Sound is generated locally. There is no microphone or voice connection.</p><button class="primary" data-action="close-modal">Return to the suite →</button>`,'SETTINGS');return;}
-  if(action==='help'){openModal(`<h2>Your hands. Your view.</h2><div class="help-grid"><section><h3>Walk through the suite</h3><p>WASD or arrow keys to move. Drag in the room to look. E interacts with a nearby station. Use the room tabs or station buttons for direct access. Shift moves faster.</p></section><section><h3>Operate the scope</h3><p>W advances; S withdraws. Drag or arrow keys angle the tip. Q/E rotate the shaft view. Use the visible sliders for precise control. C centres the controls.</p></section><section><h3>Clear the view</h3><p>Hold I to insufflate, J to irrigate, K to suction and L to wash the lens. All functions have on-screen controls. Release to stop.</p></section><section><h3>Document the survey</h3><p>Pause to inspect. Document each region and select a photo label before capturing. Review case findings and biopsy decisions in the Findings tab. Release retroflexion and withdraw before recovery.</p></section></div><p class="fineprint">This is route-assisted visual practice; it does not reproduce the forces, shaft looping, oral intubation or full manual mechanics of a real endoscope.</p>`,'CONTROLS & ACCESSIBILITY');return;}
+  if(action==='help'){openModal(`<h2>Your hands. Your view.</h2><button class="primary" data-action="control-demo">Watch the controls in the stomach →</button><div class="help-grid"><section><h3>Walk through the suite</h3><p>WASD or arrow keys to move. Drag in the room to look. E interacts with a nearby station. Use the room tabs or station buttons for direct access. Shift moves faster.</p></section><section><h3>Operate the scope</h3><p>W advances; S withdraws. Drag or arrow keys angle the tip. Q/E rotate the shaft view. Use the visible sliders for precise control. C centres the controls.</p></section><section><h3>Clear the view</h3><p>Hold I to insufflate, J to irrigate, K to suction and L to wash the lens. All functions have on-screen controls. Release to stop.</p></section><section><h3>Document the survey</h3><p>Pause to inspect. Document each region and select a photo label before capturing. Review case findings and biopsy decisions in the Findings tab. Release retroflexion and withdraw before recovery.</p></section></div><p class="fineprint">This is route-assisted visual practice; it does not reproduce the forces, shaft looping, oral intubation or full manual mechanics of a real endoscope.</p>`,'CONTROLS & ACCESSIBILITY');return;}
   if(action==='fullscreen'){try{if(!document.fullscreenElement)await $('.simulation-stage').requestFullscreen();else await document.exitFullscreen();}catch{toast('Full-screen mode is unavailable in this browser.',true);}return;}
 });
 
@@ -288,15 +350,15 @@ document.querySelectorAll('[data-hold]').forEach(b=>{
 // Touch movement uses the same room key contract; it never drives the endoscope.
 document.querySelectorAll('[data-walk]').forEach(b=>{const send=type=>window.dispatchEvent(new KeyboardEvent(type,{code:b.dataset.walk,key:b.dataset.walk,bubbles:true}));b.addEventListener('pointerdown',e=>{e.preventDefault();b.setPointerCapture(e.pointerId);send('keydown');});for(const ev of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(ev,()=>send('keyup'));});
 window.addEventListener('beforeunload',persist);
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&session?.phase==='procedure')dispatch({type:'PAUSE',value:true},true);lastFrame=performance.now();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseControlDemo();if(document.hidden&&session?.phase==='procedure')dispatch({type:'PAUSE',value:true},true);lastFrame=performance.now();});
 
-function beep(){if(muted||!audioContext||session?.phase!=='procedure'||session.paused||view!=='scope')return;const o=audioContext.createOscillator(),g=audioContext.createGain();o.frequency.value=session.emergency?450:780;g.gain.setValueAtTime(.025,audioContext.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+.07);o.connect(g);g.connect(audioContext.destination);o.start();o.stop(audioContext.currentTime+.075);}
+function beep(){if(controlDemo||muted||!audioContext||session?.phase!=='procedure'||session.paused||view!=='scope')return;const o=audioContext.createOscillator(),g=audioContext.createGain();o.frequency.value=session.emergency?450:780;g.gain.setValueAtTime(.025,audioContext.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+.07);o.connect(g);g.connect(audioContext.destination);o.start();o.stop(audioContext.currentTime+.075);}
 let beepClock=0;
-function frame(now){const dt=Math.min(.05,(now-lastFrame)/1000);lastFrame=now;if(!document.hidden){if(scope&&(view==='scope'||room==='procedure')&&!showIntro)scope.update(dt);if(session&&now-lastTick>1000){dispatch({type:'TICK',dt:1,active:view==='scope'&&!showIntro&&!$('#modal').open&&scopeReady},true);lastTick=now;}if(now-lastSave>4000){persist();lastSave=now;}beepClock+=dt;if(beepClock>.83){beepClock=0;beep();}}raf=requestAnimationFrame(frame);}
+function frame(now){const dt=Math.min(.05,(now-lastFrame)/1000);lastFrame=now;if(!document.hidden){if(controlDemo&&!controlDemo.returning&&scopeReady&&!loadingScope&&!$('#modal').open&&controlDemo.state&&!controlDemo.state.practicing&&!controlDemo.state.paused){controlDemo.elapsed+=dt;const pose=demoPose(controlDemo.state.stepId,controlDemo.elapsed);if(pose)scope?.setDemonstrationPose(pose);}if(scope&&(view==='scope'||room==='procedure')&&!showIntro)scope.update(dt);if(!controlDemo&&session&&now-lastTick>1000){dispatch({type:'TICK',dt:1,active:view==='scope'&&!showIntro&&!$('#modal').open&&scopeReady},true);lastTick=now;}if(now-lastSave>4000){persist();lastSave=now;}beepClock+=dt;if(beepClock>.83){beepClock=0;beep();}}raf=requestAnimationFrame(frame);}
 try {
   world=createWorld({container:$('#world-view'),onInteract:item=>handleStation(item.id),onLocation:location=>{roomPos=location;if(view==='world'&&room!==location.room){room=location.room;renderRooms();}document.querySelectorAll('[data-map-room]').forEach(b=>b.classList.toggle('active',b.dataset.mapRoom===location.room));$('#map-dot').style.left=`${Math.max(2,Math.min(97,(location.x+12)/24*100))}%`;$('#map-dot').style.top=`${Math.max(30,Math.min(80,(location.z+4)/8*100))}%`;},quality:preferences.quality});
 }catch(error){$('#stage-error').hidden=false;$('#stage-error').innerHTML=`<h2>3D view unavailable</h2><p>${esc(error.message)}</p><p>You can still use the learning library and case preparation.</p><button class="primary" data-action="curriculum">Open the learning library →</button>`;}
 render();raf=requestAnimationFrame(frame);
 window.addEventListener('pagehide',event=>{if(session?.phase==='procedure')session.paused=true;scope?.setEnabled(false);world?.setProcedureActive(true);persist();if(!event.persisted){cancelAnimationFrame(raf);scope?.dispose();world?.dispose();audioContext?.close();}});
 window.addEventListener('pageshow',event=>{if(event.persisted){lastFrame=performance.now();lastTick=lastFrame;render();}});
-window.addEventListener('blur',()=>{if(session?.phase==='procedure'&&!session.paused)dispatch({type:'PAUSE',value:true},true);});
+window.addEventListener('blur',()=>{pauseControlDemo();if(session?.phase==='procedure'&&!session.paused)dispatch({type:'PAUSE',value:true},true);});

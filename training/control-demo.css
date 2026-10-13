@@ -1,0 +1,69 @@
+.control-demo {
+  --demo-ink: var(--ink, #173840);
+  --demo-muted: var(--muted, #62777a);
+  --demo-teal: var(--teal, #287970);
+  --demo-line: var(--line, #d8e2e1);
+  --demo-paper: var(--paper, #f3f6f6);
+  --demo-soft: #e4eeeb;
+  color: var(--demo-ink);
+  min-width: 0;
+  font-family: Figtree, Arial, sans-serif;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+}
+.control-demo *, .control-demo *::before, .control-demo *::after { box-sizing: border-box; }
+.control-demo [hidden] { display: none !important; }
+.control-demo .control-demo-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.control-demo .control-demo-eyebrow { color: var(--demo-teal); font-size: 9px; line-height: 1.4; letter-spacing: .1em; font-weight: 650; }
+.control-demo .control-demo-progress { display: block; color: var(--demo-muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.control-demo .control-demo-track { display: flex; gap: 5px; margin: 8px 0 24px; }
+.control-demo .control-demo-mark { height: 3px; flex: 1; background: var(--demo-line); border-radius: 2px; }
+.control-demo .control-demo-mark[data-status='seen'] { background: #a2c1ba; }
+.control-demo .control-demo-mark[data-status='current'] { background: var(--demo-teal); }
+#coach-body .control-demo .control-demo-title { font-size: 25px; line-height: 1.14; letter-spacing: -.04em; font-weight: 560; margin: 0 0 16px; text-wrap: balance; }
+.control-demo .control-demo-control { display: inline-block; background: var(--demo-soft); color: var(--demo-teal); border-radius: 4px; padding: 7px 9px; font-size: 10px; font-weight: 600; line-height: 1.4; margin-bottom: 8px; }
+#coach-body .control-demo .control-demo-body { margin: 10px 0 16px; font-size: 13px; line-height: 1.65; text-wrap: pretty; }
+.control-demo .control-demo-diagram { margin: 0 0 20px; padding: 12px 0 8px; background: var(--demo-soft); border-radius: 6px; }
+.control-demo .control-demo-diagram svg { display: block; width: 100%; height: auto; }
+.control-demo .control-demo-diagram text { fill: var(--demo-muted); font: 9px Figtree, Arial, sans-serif; }
+.control-demo .control-demo-diagram-shaft { fill: none; stroke: var(--demo-ink); stroke-width: 10; stroke-linecap: round; }
+.control-demo .control-demo-diagram-camera { fill: var(--demo-teal); stroke: var(--demo-soft); stroke-width: 2; }
+.control-demo .control-demo-diagram-direction { fill: none; stroke: var(--demo-teal); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.control-demo .control-demo-diagram-rotation, .control-demo .control-demo-diagram-orientation { fill: none; stroke: var(--demo-teal); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.control-demo .control-demo-diagram-caption { color: var(--demo-muted); margin: 0; padding: 0 12px; font-size: 9px; line-height: 1.5; text-align: center; }
+#coach-body .control-demo .control-demo-cue { margin: 0 0 20px; padding-left: 12px; border-left: 2px solid #a2c1ba; color: var(--demo-muted); font-size: 12px; line-height: 1.65; text-wrap: pretty; }
+#coach-body .control-demo .control-demo-motion-status { margin: 0 0 8px; color: var(--demo-muted); font-size: 10px; line-height: 1.55; }
+.control-demo button { font: inherit; min-height: 40px; border-radius: 5px; line-height: 1.4; transition: background 160ms, color 160ms; }
+.control-demo button:focus-visible, .control-demo .control-demo-title:focus-visible { outline: 2px solid var(--demo-teal); outline-offset: 4px; }
+.control-demo button:disabled { color: #879796; cursor: default; }
+.control-demo .control-demo-skip { margin: -8px 0 -8px 0; padding: 8px 0 8px 8px; color: var(--demo-muted); font-size: 11px; text-decoration: underline; text-underline-offset: 3px; }
+.control-demo .control-demo-skip:hover { color: var(--demo-teal); }
+.control-demo .control-demo-motion-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+.control-demo .control-demo-replay, .control-demo .control-demo-pause { border: 1px solid var(--demo-line); padding: 8px 5px; font-size: 11px; }
+.control-demo .control-demo-replay:hover, .control-demo .control-demo-pause:hover { background: var(--demo-soft); }
+.control-demo .control-demo-navigation { display: flex; gap: 8px; margin-top: 24px; }
+.control-demo .control-demo-previous { border: 1px solid var(--demo-line); padding: 10px 12px; font-size: 11px; }
+.control-demo .control-demo-previous:not(:disabled):hover { background: var(--demo-soft); }
+.control-demo .control-demo-next { flex: 1; padding: 10px 12px; background: var(--demo-teal); color: white; font-size: 12px; font-weight: 550; }
+.control-demo .control-demo-next:hover, .control-demo .control-demo-finish:hover { background: #1c625a; }
+.control-demo .control-demo-footer { margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--demo-line); }
+.control-demo .control-demo-footer .control-demo-navigation { margin-top: 0; }
+.control-demo .control-demo-try { display: block; width: 100%; margin-top: 8px; padding: 10px 12px; color: var(--demo-teal); font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
+.control-demo .control-demo-try:hover { background: var(--demo-soft); }
+.control-demo .control-demo-finish { width: 100%; margin-top: 8px; padding: 12px; color: white; background: var(--demo-teal); font-size: 12px; font-weight: 550; }
+#coach-body .control-demo .control-demo-note { padding-top: 16px; margin: 20px 0 0; border-top: 1px solid var(--demo-line); color: var(--demo-muted); font-size: 10px; line-height: 1.65; }
+.angle-controls label.control-demo-highlight, .angle-controls .control-demo-highlight, .control-demo-highlight { outline: 2px solid var(--teal, #287970); outline-offset: 5px; border-radius: 3px; background-color: #e4eeeb; }
+@media (min-width: 1001px) {
+  .controls-demo #coach-body { display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
+  .controls-demo .control-demo { display: flex; flex-direction: column; height: 100%; flex: 1; min-height: 0; }
+  .controls-demo .control-demo-header, .controls-demo .control-demo-progress, .controls-demo .control-demo-track, .controls-demo .control-demo-footer { flex-shrink: 0; }
+  .controls-demo .control-demo-track { margin-bottom: 16px; }
+  .controls-demo .control-demo-content { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #a2c1ba transparent; padding: 4px 8px 4px 4px; }
+  .controls-demo .control-demo-footer { margin-top: 12px; }
+}
+@media (max-width: 1000px) {
+  .controls-demo #coach-body { overflow: visible; }
+  .controls-demo .control-demo { height: auto; }
+  .controls-demo .control-demo-content { overflow: visible; }
+}
+@media (prefers-reduced-motion: reduce) { .control-demo button { transition: none; } }

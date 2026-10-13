@@ -92,3 +92,31 @@ dialog.library-modal #modal-body{height:100%;min-height:0}
 .clinical-atlas{display:grid;grid-template-columns:220px 1fr;gap:24px}.clinical-atlas nav{display:flex;flex-direction:column;gap:5px}.clinical-atlas nav button{text-align:left;border-radius:6px;padding:13px 12px;font-size:13px;border:1px solid var(--line)}.clinical-atlas nav button small{display:block;font-size:10px;margin-top:5px;color:var(--teal)}.clinical-atlas nav button[aria-pressed=true]{background:#e3eeeb;border-color:#6b9892}.clinical-atlas figure{margin:0;min-width:0}.clinical-atlas figure img{max-width:100%;max-height:510px;object-fit:contain;background:#10262b;display:block;width:100%;border-radius:7px}.clinical-atlas figcaption h3{margin:15px 0 7px;font-size:19px}.clinical-atlas figcaption p{margin:9px 0;font-size:13px}.clinical-atlas figcaption small{font-size:11px;line-height:1.6;color:var(--muted);display:block}.atlas-placeholder{padding:55px 25px;background:#e6eeec;border-radius:7px;color:var(--muted)}
 .instrument-explorer{display:grid;grid-template-columns:1fr 1fr;gap:30px}.instrument-picture{position:relative;height:490px;background:radial-gradient(ellipse,#bdcece,#e9eeee 66%);border-radius:12px;overflow:hidden}.instrument-picture img{height:100%;width:100%;object-fit:contain}.instrument-picture button{position:absolute;border:2px solid white;background:#2869c7;color:white;border-radius:50%;width:32px;height:32px;box-shadow:0 2px 12px #17384033}.instrument-picture button[aria-pressed=true]{background:#153a47;outline:5px solid #ffffff55}.instrument-explorer nav{display:grid;gap:4px;margin-bottom:24px}.instrument-explorer nav button{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}.instrument-explorer nav button span{font-size:10px;color:var(--muted);margin-right:13px}.instrument-explorer nav button[aria-pressed=true]{background:#e4eeec;color:var(--teal)}.instrument-explorer h3{font-size:23px;margin-bottom:12px}.instrument-explorer p{font-size:14px}.instrument-explorer .secondary{margin-top:20px}
 @media(max-width:700px){.clinical-atlas{grid-template-columns:1fr}.clinical-atlas nav{display:grid;grid-template-columns:1fr 1fr;gap:5px}.clinical-atlas nav button{padding:10px;font-size:11px}.instrument-explorer{grid-template-columns:1fr;gap:18px}.instrument-picture{height:330px}.instrument-explorer nav{grid-template-columns:1fr 1fr}.atlas-heading h2{font-size:29px}.atlas-heading p{font-size:12px}}
+
+/* Orientation practice retains the real monitor and the same input controls. */
+.demo-wheel-cue{display:none;position:absolute;left:64px;top:1px;width:67px;height:62px;pointer-events:none}
+.controls-demo .demo-wheel-cue{display:block}
+.demo-wheel-cue i{position:absolute;width:40px;height:40px;border:2px solid #b8f2e5;border-radius:50%;box-shadow:0 0 0 2px #123e4480}
+.demo-wheel-cue i:before{content:"";position:absolute;width:3px;height:11px;left:17px;top:2px;background:#ecfff6;border-radius:3px}
+.demo-wheel-cue i+i{width:27px;height:27px;left:17px;top:9px;border-color:#ffc891}
+.demo-wheel-cue i+i:before{left:10px;width:2px;height:8px;background:#ffe5c3}
+.angle-controls .demo-active-control{outline:2px solid #539a8d;outline-offset:5px;border-radius:3px;background:#e0eee8}
+.controls-demo .coach-tabs,.controls-demo .patient-strip,.controls-demo #world-view,.controls-demo .patient-inset-label{display:none!important}
+.controls-demo .scope-caption{right:18px}
+.controls-demo .insertion-controls,.controls-demo .fluid-controls{opacity:.45}
+.controls-demo .coach-heading>.eyebrow{font-size:0}
+.controls-demo .coach-heading>.eyebrow:after{content:"INSTRUMENT ORIENTATION";font-size:9px;letter-spacing:1px}
+.controls-demo .monitor-status #tip-label{font-size:0}
+.controls-demo .monitor-status #tip-label:after{content:"Insertion fixed · no case credit";font-size:10px}
+.welcome [data-action=control-demo]{display:block;font-size:12px;margin-top:12px;color:#e5f1ed;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:1000px){
+ .controls-demo .insertion-controls,.controls-demo .fluid-controls{display:none}
+ .controls-demo .operator-console{grid-template-columns:1fr}
+ .controls-demo .angle-controls{grid-column:1/-1}
+ .controls-demo .simulation-stage{position:sticky;top:0;z-index:6;height:320px;min-height:320px!important}
+ .controls-demo .control-demo-footer{position:fixed;z-index:8;left:0;right:0;bottom:0;padding:10px 18px 12px;background:var(--paper);border-top:1px solid var(--line);box-shadow:0 -6px 20px #143f4410}
+ .controls-demo .control-demo-footer .control-demo-navigation{margin-top:0}
+ .controls-demo .control-demo-footer .control-demo-try{min-height:32px;margin-top:3px;padding:6px}
+ .controls-demo #app{padding-bottom:114px}
+ .controls-demo .coach-heading{padding-bottom:8px}
+}
